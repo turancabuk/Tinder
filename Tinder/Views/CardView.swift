@@ -9,17 +9,42 @@ import UIKit
 
 class CardView: UIView {
     
-    let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    let imageView = UIImageView()
     let threshould: CGFloat = 100
+    
+    let nameLabel = UILabel()
+    let ageLabel = UILabel()
+    let professionLabel = UILabel()
+    var informationStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         layer.cornerRadius = 10
         clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         
         addSubview(imageView)
         imageView.fillSuperview()
+        
+        [nameLabel, ageLabel, professionLabel].forEach { lbl in
+            lbl.textColor = .white
+            lbl.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
+        }
+        nameLabel.font = .systemFont(ofSize: 26, weight: .heavy)
+        
+        informationStackView = VerticalStackView(arrangedSubviews: [
+        UIStackView(arrangedSubviews: [nameLabel, ageLabel]),
+        professionLabel
+        ])
+        
+        addSubview(informationStackView)
+        informationStackView.anchor(
+            top: nil, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: trailingAnchor, padding: .init(
+            top: 0, left: 10, bottom: 20, right: 0))
+
+        
+
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
@@ -60,7 +85,9 @@ class CardView: UIView {
             }
         }) { (_) in
             self.transform = .identity
-            self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
+            if shouldDismissCard {
+                self.removeFromSuperview()
+            }
         }
     }
     required init?(coder: NSCoder) {
