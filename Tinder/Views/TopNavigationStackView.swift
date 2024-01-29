@@ -18,10 +18,9 @@ class TopNavigationStackView: UIStackView {
             return button
         }
         
-        subviews.forEach { (v) in
-            addArrangedSubview(v)
+        subviews.forEach { (view) in
+            addArrangedSubview(view)
         }
-        
         distribution = .fillEqually
         heightAnchor.constraint(equalToConstant: 70).isActive = true
         

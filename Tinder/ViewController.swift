@@ -10,14 +10,21 @@ import UIKit
 class ViewController: UIViewController {
     
     let topStackView = TopNavigationStackView()
-    let blueView = UIView()
+    let carDeckView = UIView()
     let buttonsStackView = HomeBottomControlsStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupLayout(topStackView, blueView, buttonsStackView)
+        setupLayout(topStackView, carDeckView, buttonsStackView)
+        setupDummyCards()
         
+    }
+    fileprivate func setupDummyCards() {
+        
+        let cardView = CardView()
+        carDeckView.addSubview(cardView)
+        cardView.fillSuperview()
     }
     fileprivate func setupLayout(_ topStackView: TopNavigationStackView, _ blueView: UIView, _ buttonsStackView: HomeBottomControlsStackView) {
         let overAllStackView = UIStackView(arrangedSubviews: [
@@ -28,6 +35,10 @@ class ViewController: UIViewController {
         view.addSubview(overAllStackView)
         overAllStackView.anchor(
             top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
+        overAllStackView.isLayoutMarginsRelativeArrangement = true
+        overAllStackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
+        
+        overAllStackView.bringSubviewToFront(carDeckView)
     }
 }
 
