@@ -12,9 +12,13 @@ class HomeController: UIViewController {
     let topStackView = TopNavigationStackView()
     let carDeckView = UIView()
     let buttonsStackView = HomeBottomControlsStackView()
-    let users = [User(
-        name: "Kelly", age: 23, profession: "Music DJ", image: "lady5c"),User(
-        name: "Jane", age: 18, profession: "Teacher", image: "lady4c")]
+    let cardViewModels = ([
+        User(name: "Kelly", age: 23, profession: "Music DJ", imageName: "lady5c"),
+        User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c"),
+        Advertiser(title: "Settings View", brandName: "Little Steps Development", posterPhotoName: "Settings View")
+    ] as [ProducesCardViewModel]).map { (producer) -> CardViewModel in
+        return producer.toCardViewModel()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +28,9 @@ class HomeController: UIViewController {
         
     }
     fileprivate func setupDummyCards() {
-         
-        users.forEach { (user) in
-            let cardView = CardView()
-            cardView.imageView.image = UIImage(named: user.image)
-            cardView.nameLabel.text = "\(user.name)"
-            cardView.ageLabel.text = "   \(user.age)"
-            cardView.professionLabel.text = "\(user.profession)"
+        cardViewModels.forEach { (cardVM) in
+            let cardView = CardView(frame: .zero)
+            cardView.cardViewModel = cardVM
             carDeckView.addSubview(cardView)
             cardView.fillSuperview()
         }
@@ -39,7 +39,6 @@ class HomeController: UIViewController {
         let overAllStackView = UIStackView(arrangedSubviews: [
             topStackView, blueView, buttonsStackView
         ])
-        
         overAllStackView.axis = .vertical
         view.addSubview(overAllStackView)
         overAllStackView.anchor(

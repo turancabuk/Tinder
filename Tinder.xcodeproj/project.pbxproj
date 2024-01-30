@@ -19,6 +19,8 @@
 		5C8844C92B678FB40041B9DA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844C82B678FB40041B9DA /* CardView.swift */; };
 		5C8844CC2B67B4AB0041B9DA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844CB2B67B4AB0041B9DA /* User.swift */; };
 		5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844CD2B67C5640041B9DA /* VerticalStackView.swift */; };
+		5C8844D22B67D9860041B9DA /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D12B67D9860041B9DA /* CardViewModel.swift */; };
+		5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D32B68D8E90041B9DA /* Advertiser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		5C8844C82B678FB40041B9DA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		5C8844CB2B67B4AB0041B9DA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C8844CD2B67C5640041B9DA /* VerticalStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
+		5C8844D12B67D9860041B9DA /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		5C8844D32B68D8E90041B9DA /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,10 +74,11 @@
 			children = (
 				5C8844CA2B67B4A20041B9DA /* Model */,
 				5C8844C32B66DB010041B9DA /* Views */,
+				5C8844D02B67D9700041B9DA /* ViewModels */,
+				5C8844CF2B67D58B0041B9DA /* Controllers */,
 				5C8844C02B6537570041B9DA /* Extensions */,
 				5C1B0DB22B6524810094915B /* AppDelegate.swift */,
 				5C1B0DB42B6524810094915B /* SceneDelegate.swift */,
-				5C1B0DB62B6524810094915B /* HomeController.swift */,
 				5C1B0DB82B6524810094915B /* Main.storyboard */,
 				5C1B0DBB2B6524820094915B /* Assets.xcassets */,
 				5C1B0DBD2B6524820094915B /* LaunchScreen.storyboard */,
@@ -105,8 +110,25 @@
 			isa = PBXGroup;
 			children = (
 				5C8844CB2B67B4AB0041B9DA /* User.swift */,
+				5C8844D32B68D8E90041B9DA /* Advertiser.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5C8844CF2B67D58B0041B9DA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5C1B0DB62B6524810094915B /* HomeController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		5C8844D02B67D9700041B9DA /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5C8844D12B67D9860041B9DA /* CardViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,8 +204,10 @@
 			files = (
 				5C8844C92B678FB40041B9DA /* CardView.swift in Sources */,
 				5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */,
+				5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */,
 				5C8844C72B66E1B40041B9DA /* TopNavigationStackView.swift in Sources */,
 				5C1B0DB72B6524810094915B /* HomeController.swift in Sources */,
+				5C8844D22B67D9860041B9DA /* CardViewModel.swift in Sources */,
 				5C1B0DB32B6524810094915B /* AppDelegate.swift in Sources */,
 				5C8844CC2B67B4AB0041B9DA /* User.swift in Sources */,
 				5C8844C52B66DB1B0041B9DA /* HomeBottomControlsStackView.swift in Sources */,
