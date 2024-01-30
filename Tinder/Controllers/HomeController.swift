@@ -13,7 +13,7 @@ class HomeController: UIViewController {
     let carDeckView = UIView()
     let buttonsStackView = HomeBottomControlsStackView()
     let cardViewModels = ([
-        Advertiser(title: "Settings View", brandName: "Little Steps Development", posterPhotoName: "Settings View"),
+        Advertiser(title: "Baby Tracker", brandName: "Little Steps Development", posterPhotoName: "Settings View"),
         User(name: "Kelly", age: 23, profession: "Music DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
         User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"])
     ] as [ProducesCardViewModel]).map { (producer) -> CardViewModel in
