@@ -11,16 +11,28 @@ class CardView: UIView {
     
     var cardViewModel: CardViewModel! {
         didSet {
-            imageView.image = UIImage(named: cardViewModel.imageName)
+            let imageName = cardViewModel.imageNames.first ?? ""
+            imageView.image = UIImage(named: imageName)
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
+            
+            (0..<cardViewModel.imageNames.count).forEach { (_) in
+                let barView = UIView()
+                barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+                barView.layer.cornerRadius = 6
+                barStackView.addArrangedSubview(barView)
+            }
+            barStackView.arrangedSubviews.first?.backgroundColor = .white
         }
     }
     
     // encapsulation
-    fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    fileprivate let imageView = UIImageView()
     fileprivate let informationLabel = UILabel()
     fileprivate let gradientLayer = CAGradientLayer()
+    fileprivate var barStackView = UIStackView()
+    fileprivate var imageIndex = 0
+
 
     
     // Configurations
@@ -30,12 +42,10 @@ class CardView: UIView {
         super.init(frame: frame)
 
         
-        
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        addGestureRecognizer(panGesture)
+        addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
         
         setLayout()
-        setGradientLayer()
     }
     
     @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
@@ -52,6 +62,23 @@ class CardView: UIView {
             ()
         }
     }
+    @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {
+        let tapLocation = gesture.location(in: nil)
+        let advanceNextPhoto = tapLocation.x > frame.width / 2
+        
+        if advanceNextPhoto {
+            imageIndex = min(imageIndex + 1, cardViewModel.imageNames.count - 1)
+        }else{
+            imageIndex = max(0, imageIndex - 1)
+        }
+        
+        let imageName = cardViewModel.imageNames[imageIndex]
+        imageView.image = UIImage(named: imageName)
+        barStackView.arrangedSubviews.forEach { (chosen) in
+            chosen.backgroundColor = UIColor(white: 0, alpha: 0.1)
+        }
+        barStackView.arrangedSubviews[imageIndex].backgroundColor = .white
+    }
     fileprivate func setLayout() {
         layer.cornerRadius = 10
         clipsToBounds = true
@@ -59,6 +86,9 @@ class CardView: UIView {
         imageView.contentMode = .scaleAspectFill
         addSubview(imageView)
         imageView.fillSuperview()
+        
+        setupBarStackView()
+        setGradientLayer()
         
         addSubview(informationLabel)
         informationLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
@@ -104,6 +134,16 @@ class CardView: UIView {
     override func layoutSubviews() {
         
         gradientLayer.frame = self.frame
+    }
+    fileprivate func setupBarStackView() {
+        
+        addSubview(barStackView)
+        barStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(
+            top: 8, left: 8, bottom: 0, right: 8), size: .init(
+                width: 0, height: 4))
+        
+        barStackView.spacing = 4
+        barStackView.distribution = .fillEqually
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
