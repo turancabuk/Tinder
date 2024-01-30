@@ -1,9 +1,8 @@
 //
 //  Extensions+UIView.swift
-//  SlideOutMenuInProgress
+//  Tinder
 //
-//  Created by Brian Voong on 9/30/18.
-//  Copyright © 2018 Brian Voong. All rights reserved.
+//  Created by Turan Çabuk on 29.01.2024.
 //
 
 import UIKit
@@ -18,7 +17,6 @@ struct AnchoredConstraints {
     var top, leading, bottom, trailing, width, height: NSLayoutConstraint?
 }
 
-// Reference Video: https://youtu.be/iqpAP7s3b-8
 extension UIView {
     
     @discardableResult
@@ -93,5 +91,4 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
     }
-    
 }

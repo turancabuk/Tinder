@@ -1,8 +1,8 @@
 //
 //  VerticalStackView.swift
-//  Appstore
+//  Tinder
 //
-//  Created by Turan Çabuk on 4.01.2024.
+//  Created by Turan Çabuk on 29.01.2024.
 //
 
 import UIKit
