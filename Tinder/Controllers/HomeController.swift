@@ -24,8 +24,16 @@ class HomeController: UIViewController {
         super.viewDidLoad()
         
         setupLayout(topStackView, carDeckView, buttonsStackView)
+        
+        topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         setupDummyCards()
         
+    }
+    @objc func handleSettings() {
+        
+        let registrationViewController = RegistrationController()
+        registrationViewController.modalPresentationStyle = .fullScreen
+        present(registrationViewController, animated: true, completion: nil)
     }
     fileprivate func setupDummyCards() {
         cardViewModels.forEach { (cardVM) in
