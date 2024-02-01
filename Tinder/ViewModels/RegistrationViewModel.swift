@@ -9,6 +9,8 @@ import UIKit
 
 class RegistrationViewModel {
     
+
+    var image: UIImage? {didSet{imageSelectorObserver?(image)}}
     var fullName: String? {didSet{checkFormValidity()}}
     var email: String? {didSet{checkFormValidity()}}
     var password: String? {didSet{checkFormValidity()}}
@@ -20,5 +22,5 @@ class RegistrationViewModel {
     }
     
     var isFormValidObserver: ((Bool) -> ())?
-
+    var imageSelectorObserver: ((UIImage?) -> ())?
 }
