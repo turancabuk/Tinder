@@ -8,7 +8,9 @@
 import UIKit
 
 class RegistrationController: UIViewController {
-
+    
+    let registrationViewModel = RegistrationViewModel()
+    
     lazy var selectPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Select Photo", for: .normal)
@@ -23,6 +25,7 @@ class RegistrationController: UIViewController {
     lazy var fullNameTextfield: CustomTextField = {
         let textfield = CustomTextField(pading: 16)
         textfield.placeholder = "Enter Full Name"
+        textfield.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         textfield.setup()
         return textfield
     }()
@@ -31,6 +34,7 @@ class RegistrationController: UIViewController {
         let textfield = CustomTextField(pading: 16)
         textfield.placeholder = "Enter email"
         textfield.keyboardType = .emailAddress
+        textfield.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         textfield.setup()
         return textfield
     }()
@@ -39,6 +43,7 @@ class RegistrationController: UIViewController {
         let textfield = CustomTextField(pading: 16)
         textfield.placeholder = "Enter Password"
         textfield.isSecureTextEntry = true
+        textfield.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         textfield.setup()
         return textfield
         
@@ -49,9 +54,10 @@ class RegistrationController: UIViewController {
         button.setTitle("Register", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         button.heightAnchor.constraint(equalToConstant: 42).isActive = true
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.gray, for: .disabled)
+        button.isEnabled = false
         button.layer.cornerRadius = 16
-        button.backgroundColor = #colorLiteral(red: 0.8118591905, green: 0.09407807142, blue: 0.3270188272, alpha: 1)
+        button.backgroundColor = .lightGray
         return button
     }()
     
@@ -62,7 +68,6 @@ class RegistrationController: UIViewController {
         button.heightAnchor.constraint(equalToConstant: 22).isActive = true
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     
@@ -77,8 +82,11 @@ class RegistrationController: UIViewController {
         setupLayout()
         setupNotificationObservers()
         setupTapGesture()
+        setupRegistrationViewModelObserver()
         
     }
+    
+    // MARK: Layout Confs.
     fileprivate func setupLayout() {
         
         view.addSubview(layoutStackView)
@@ -103,13 +111,16 @@ class RegistrationController: UIViewController {
         view.layer.addSublayer(gradientLayer)
         gradientLayer.frame = view.bounds
     }
+    
+    // MARK: Keyboard Confs:
+    
     fileprivate func setupNotificationObservers() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
     @objc func handleKeyboardShow(notification: Notification) {
-            
+        
         guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardFrame = value.cgRectValue
         let bottomSpace = view.frame.height - layoutStackView.frame.origin.y - layoutStackView.frame.height
@@ -127,7 +138,27 @@ class RegistrationController: UIViewController {
             self.view.transform = .identity
         }
     }
-    @objc func handleLogin() {
+    fileprivate func setupRegistrationViewModelObserver() {
         
+        registrationViewModel.isFormValidObserver = { [unowned self] (isFormValid) in
+            self.registerButton.isEnabled = isFormValid
+            if isFormValid {
+                self.registerButton.backgroundColor = #colorLiteral(red: 0.8924006224, green: 0.117617093, blue: 0.4611734748, alpha: 1)
+                self.registerButton.setTitleColor(.white, for: .normal)
+            }else{
+                self.registerButton.backgroundColor = .lightGray
+                self.registerButton.setTitleColor(.gray, for: .normal)
+            }
+        }
+    }
+    @objc fileprivate func  handleTextChange(textfield: UITextField) {
+        
+        if textfield == fullNameTextfield {
+            registrationViewModel.fullName = textfield.text
+        }else if textfield == emailTextfield {
+            registrationViewModel.email = textfield.text
+        }else{
+            registrationViewModel.password = textfield.text
+        }
     }
 }
