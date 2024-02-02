@@ -6,19 +6,22 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
 
 class HomeController: UIViewController {
     
     let topStackView = TopNavigationStackView()
     let carDeckView = UIView()
     let buttonsStackView = HomeBottomControlsStackView()
-    let cardViewModels = ([
-        Advertiser(title: "Baby Tracker", brandName: "Little Steps Development", posterPhotoName: "Settings View"),
-        User(name: "Kelly", age: 23, profession: "Music DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
-        User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"])
-    ] as [ProducesCardViewModel]).map { (producer) -> CardViewModel in
-        return producer.toCardViewModel()
-    }
+    var cardViewModels = [CardViewModel]()
+//    let cardViewModels = ([
+//        Advertiser(title: "Baby Tracker", brandName: "Little Steps Development", posterPhotoName: "Settings View"),
+//        User(name: "Kelly", age: 23, profession: "Music DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
+//        User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"])
+//    ] as [ProducesCardViewModel]).map { (producer) -> CardViewModel in
+//        return producer.toCardViewModel()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +30,7 @@ class HomeController: UIViewController {
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         setupDummyCards()
-        
+        fetchUsersFromFirebase()
     }
     @objc func handleSettings() {
         
@@ -55,6 +58,22 @@ class HomeController: UIViewController {
         overAllStackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
         
         overAllStackView.bringSubviewToFront(carDeckView)
+    }
+    fileprivate func fetchUsersFromFirebase() {
+        
+        Firestore.firestore().collection("users").getDocuments { (snapShot, err) in
+            
+            if let err = err {
+                print("User fetching failed: ", err)
+                return
+            }
+            snapShot?.documents.forEach({ (documentSnapshot) in
+                let userDictionary = documentSnapshot.data()
+                let user = User(dictionary: userDictionary)
+                self.cardViewModels.append(user.toCardViewModel())
+            })
+            self.setupDummyCards()
+        }
     }
 }
 

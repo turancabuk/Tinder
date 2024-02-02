@@ -177,7 +177,6 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
             registrationViewModel.password = textfield.text
         }
     }
-    
     // MARK: Button Confs:
     @objc fileprivate func handleRegister() {
         
@@ -189,7 +188,7 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     fileprivate func showHUDWithError(error: Error) {
-        
+         
         hud.textLabel.text = "Failed to Registeration \n \(error.localizedDescription)"
         hud.show(in: self.view)
         hud.dismiss(afterDelay: 12.5)
