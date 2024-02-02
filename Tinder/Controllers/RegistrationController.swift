@@ -8,11 +8,13 @@
 import UIKit
 import Firebase
 import JGProgressHUD
+import FirebaseStorage
 
 class RegistrationController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let registrationViewModel = RegistrationViewModel()
-    
+    let hud = JGProgressHUD(style: .dark)
+
     lazy var selectPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Select Photo", for: .normal)
@@ -145,19 +147,24 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     fileprivate func setupRegistrationViewModelObserver() {
-        
-        registrationViewModel.isFormValidObserver = { [unowned self] (isFormValid) in
+
+        registrationViewModel.bindableIsFormValid.bind { [unowned self] (isFormValid) in
+            guard let isFormValid = isFormValid else {return}
             self.registerButton.isEnabled = isFormValid
-            if isFormValid {
-                self.registerButton.backgroundColor = #colorLiteral(red: 0.8924006224, green: 0.117617093, blue: 0.4611734748, alpha: 1)
-                self.registerButton.setTitleColor(.white, for: .normal)
-            }else{
-                self.registerButton.backgroundColor = .lightGray
-                self.registerButton.setTitleColor(.gray, for: .normal)
-            }
+            self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
+            self.registerButton.setTitleColor(isFormValid ? .white : .gray, for: .normal)
         }
-        registrationViewModel.imageSelectorObserver = { [unowned self] img in
-            self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
+        registrationViewModel.bindableImage.bind { [unowned self] (img) in self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        registrationViewModel.bindableIsRegistering.bind { [unowned self] (isRegistering) in
+            
+            if isRegistering == true {
+                self.hud.detailTextLabel.text = "Succes"
+                self.hud.show(in: self.view)
+                hud.dismiss(afterDelay: 3)
+            }else{
+                self.hud.dismiss()
+            }
         }
     }
     @objc fileprivate func  handleTextChange(textfield: UITextField) {
@@ -173,25 +180,19 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
     
     // MARK: Button Confs:
     @objc fileprivate func handleRegister() {
-        guard let email = self.emailTextfield.text else {return}
-        guard let password = self.passwordTextfield.text else {return}
-
-        Auth.auth().createUser(withEmail: email, password: password) { (auth, err) in
-            
-            if let error = err {
-                self.showHUDWithError(error: error)
+        
+        registrationViewModel.performRegistration { [weak self] (err) in
+            if let err = err {
+                self?.showHUDWithError(error: err)
                 return
-            }else{
-                print("Succes to Auth: ", auth?.user.uid ?? "")
             }
         }
     }
     fileprivate func showHUDWithError(error: Error) {
         
-        let hud = JGProgressHUD()
         hud.textLabel.text = "Failed to Registeration \n \(error.localizedDescription)"
         hud.show(in: self.view)
-        hud.dismiss(afterDelay: 4)
+        hud.dismiss(afterDelay: 12.5)
     }
     @objc fileprivate func handleSelectPhoto() {
         
@@ -202,7 +203,7 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         let selectedImage = info[.originalImage] as? UIImage
-        registrationViewModel.image = selectedImage
+        registrationViewModel.bindableImage.value = selectedImage
         picker.dismiss(animated: true)
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
