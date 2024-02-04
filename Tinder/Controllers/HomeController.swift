@@ -29,7 +29,7 @@ class HomeController: UIViewController {
         setupLayout(topStackView, carDeckView, buttonsStackView)
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
-        setupDummyCards()
+        setupFirestoreUserCards()
         fetchUsersFromFirebase()
     }
     @objc func handleSettings() {
@@ -38,7 +38,7 @@ class HomeController: UIViewController {
         registrationViewController.modalPresentationStyle = .fullScreen
         present(registrationViewController, animated: true, completion: nil)
     }
-    fileprivate func setupDummyCards() {
+    fileprivate func setupFirestoreUserCards() {
         cardViewModels.forEach { (cardVM) in
             let cardView = CardView(frame: .zero)
             cardView.cardViewModel = cardVM
@@ -61,8 +61,9 @@ class HomeController: UIViewController {
     }
     fileprivate func fetchUsersFromFirebase() {
         
-        Firestore.firestore().collection("users").getDocuments { (snapShot, err) in
-            
+        // querry filtering with "where"
+        let query = Firestore.firestore().collection("users").whereField("Friends", arrayContains: "Vettel")
+        query.getDocuments { (snapShot, err) in
             if let err = err {
                 print("User fetching failed: ", err)
                 return
@@ -72,7 +73,7 @@ class HomeController: UIViewController {
                 let user = User(dictionary: userDictionary)
                 self.cardViewModels.append(user.toCardViewModel())
             })
-            self.setupDummyCards()
+            self.setupFirestoreUserCards()
         }
     }
 }
