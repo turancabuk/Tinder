@@ -28,12 +28,6 @@ class HomeController: UIViewController {
         setupFirestoreUserCards()
         fetchUsersFromFirestore()
     }
-    @objc func handleSettings() {
-        
-        let registrationViewController = RegistrationController()
-        registrationViewController.modalPresentationStyle = .fullScreen
-        present(registrationViewController, animated: true, completion: nil)
-    }
     fileprivate func setupFirestoreUserCards() {
         cardViewModels.forEach { (cardVM) in
             let cardView = CardView(frame: .zero)
@@ -88,7 +82,12 @@ class HomeController: UIViewController {
         cardView.fillSuperview()
     }
     // MARK: Button Confs.
-    
+    @objc func handleSettings() {
+        
+        let settingsController = SettingsController()
+        settingsController.modalPresentationStyle = .fullScreen
+        present(settingsController, animated: true, completion: nil)
+    }
     @objc fileprivate func handleRefreshButton() {
         
         self.fetchUsersFromFirestore()
