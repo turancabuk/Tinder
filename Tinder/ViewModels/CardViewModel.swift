@@ -10,6 +10,7 @@ import UIKit
 protocol ProducesCardViewModel {
     func toCardViewModel() -> CardViewModel
 }
+
 class CardViewModel {
 
     let imageNames: [String]
@@ -24,20 +25,17 @@ class CardViewModel {
     
     fileprivate var imageIndex = 0 {
         didSet {
-            let imageName = imageNames[imageIndex]
-            let image = UIImage(named: imageName)
-            imageIndexObserver?(imageIndex, image)
+            let imageUrl = imageNames[imageIndex]
+            imageIndexObserver?(imageIndex, imageUrl)
         }
     }
     
-    var imageIndexObserver: ((Int, UIImage?) -> ())?
+    var imageIndexObserver: ((Int, String?) -> ())?
     
     func advanceToNextPhoto() {
-        
         imageIndex = min(imageIndex + 1, imageNames.count - 1)
     }
     func advanceToPreviousPhoto() {
-        
         imageIndex = max(0, imageIndex - 1)
     }
 }

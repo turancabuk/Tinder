@@ -8,29 +8,25 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
+import JGProgressHUD
 
 class HomeController: UIViewController {
     
     let topStackView = TopNavigationStackView()
     let carDeckView = UIView()
-    let buttonsStackView = HomeBottomControlsStackView()
+    let bottomControls = HomeBottomControlsStackView()
     var cardViewModels = [CardViewModel]()
-//    let cardViewModels = ([
-//        Advertiser(title: "Baby Tracker", brandName: "Little Steps Development", posterPhotoName: "Settings View"),
-//        User(name: "Kelly", age: 23, profession: "Music DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
-//        User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"])
-//    ] as [ProducesCardViewModel]).map { (producer) -> CardViewModel in
-//        return producer.toCardViewModel()
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupLayout(topStackView, carDeckView, buttonsStackView)
+        setupLayout(topStackView, carDeckView, bottomControls)
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        bottomControls.refreshButton.addTarget(self, action: #selector(handleRefreshButton), for: .touchUpInside)
+        
         setupFirestoreUserCards()
-        fetchUsersFromFirebase()
+        fetchUsersFromFirestore()
     }
     @objc func handleSettings() {
         
@@ -59,22 +55,43 @@ class HomeController: UIViewController {
         
         overAllStackView.bringSubviewToFront(carDeckView)
     }
-    fileprivate func fetchUsersFromFirebase() {
-        
+    fileprivate func fetchUsersFromFirestore() {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fetching Users"
+        hud.show(in: view)
+
+        var lastFetchedUser: User?
+
         // querry filtering with "where"
-        let query = Firestore.firestore().collection("users").whereField("Friends", arrayContains: "Vettel")
-        query.getDocuments { (snapShot, err) in
+        let query = Firestore.firestore().collection("users")
+        query.getDocuments { (snapshot, err) in
+            hud.dismiss()
             if let err = err {
-                print("User fetching failed: ", err)
+                print("Failed to fetch users:", err)
                 return
             }
-            snapShot?.documents.forEach({ (documentSnapshot) in
+            
+            snapshot?.documents.forEach({ (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 self.cardViewModels.append(user.toCardViewModel())
+                lastFetchedUser = user
+                self.setupCardFromUser(user: user)
             })
-            self.setupFirestoreUserCards()
         }
+    }
+    fileprivate func setupCardFromUser(user: User) {
+        let cardView = CardView(frame: .zero)
+        cardView.cardViewModel = user.toCardViewModel()
+        carDeckView.addSubview(cardView)
+        carDeckView.sendSubviewToBack(cardView)
+        cardView.fillSuperview()
+    }
+    // MARK: Button Confs.
+    
+    @objc fileprivate func handleRefreshButton() {
+        
+        self.fetchUsersFromFirestore()
     }
 }
 
