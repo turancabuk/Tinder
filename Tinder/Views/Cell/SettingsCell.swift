@@ -8,16 +8,38 @@
 import UIKit
 
 class SettingsCell: UITableViewCell {
+    
+    class SettingsTextField: UITextField {
+        
+        override func textRect(forBounds bounds: CGRect) -> CGRect {
+            return bounds.insetBy(dx: 24, dy: 0)
+        }
+        
+        override func editingRect(forBounds bounds: CGRect) -> CGRect {
+            return bounds.insetBy(dx: 24, dy: 0)
+        }
+        
+        override var intrinsicContentSize: CGSize {
+            return CGSize(width: UIView.noIntrinsicMetric, height: 44)
+        }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
     }
+    
+    let textField: UITextField = {
+        let tf = SettingsTextField()
+        tf.placeholder = "Enter Name"
+        return tf
+    }()
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        addSubview(textField)
+        textField.fillSuperview()
 
-        // Configure the view for the selected state
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
     }
 
 }

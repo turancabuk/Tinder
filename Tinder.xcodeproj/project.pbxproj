@@ -14,6 +14,7 @@
 		5C1B0DBC2B6524820094915B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C1B0DBB2B6524820094915B /* Assets.xcassets */; };
 		5C1B0DBF2B6524820094915B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C1B0DBD2B6524820094915B /* LaunchScreen.storyboard */; };
 		5C1F0EBA2B70FB4C003B716B /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F0EB92B70FB4C003B716B /* SettingsController.swift */; };
+		5C1F0EBD2B72139C003B716B /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F0EBC2B72139C003B716B /* SettingsCell.swift */; };
 		5C69CCB32B6BBDFD00D6125B /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C69CCB22B6BBDFD00D6125B /* RegistrationViewModel.swift */; };
 		5C69CCB62B6BF55800D6125B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5C69CCB52B6BF55800D6125B /* FirebaseAnalytics */; };
 		5C69CCB82B6BF55800D6125B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 5C69CCB72B6BF55800D6125B /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -69,6 +70,7 @@
 		5C1B0DBE2B6524820094915B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C1B0DC02B6524820094915B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C1F0EB92B70FB4C003B716B /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		5C1F0EBC2B72139C003B716B /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		5C69CCB22B6BBDFD00D6125B /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		5C69CCEB2B6BFC5000D6125B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5C69CCF02B6CCCCF00D6125B /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
@@ -160,6 +162,14 @@
 			path = Tinder;
 			sourceTree = "<group>";
 		};
+		5C1F0EBB2B72113B003B716B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5C1F0EBC2B72139C003B716B /* SettingsCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		5C8844C02B6537570041B9DA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +182,7 @@
 		5C8844C32B66DB010041B9DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5C1F0EBB2B72113B003B716B /* Cell */,
 				5C8844C42B66DB1B0041B9DA /* HomeBottomControlsStackView.swift */,
 				5C8844C62B66E1B40041B9DA /* TopNavigationStackView.swift */,
 				5C8844C82B678FB40041B9DA /* CardView.swift */,
@@ -321,6 +332,7 @@
 				5C8844C92B678FB40041B9DA /* CardView.swift in Sources */,
 				5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */,
 				5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */,
+				5C1F0EBD2B72139C003B716B /* SettingsCell.swift in Sources */,
 				5C69CCB32B6BBDFD00D6125B /* RegistrationViewModel.swift in Sources */,
 				5C8844C72B66E1B40041B9DA /* TopNavigationStackView.swift in Sources */,
 				5C69CCF12B6CCCCF00D6125B /* Bindable.swift in Sources */,
