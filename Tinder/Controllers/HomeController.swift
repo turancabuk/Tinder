@@ -25,8 +25,8 @@ class HomeController: UIViewController {
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefreshButton), for: .touchUpInside)
         
-        setupFirestoreUserCards()
-        fetchUsersFromFirestore()
+//        setupFirestoreUserCards()
+//        fetchUsersFromFirestore()
     }
     fileprivate func setupFirestoreUserCards() {
         cardViewModels.forEach { (cardVM) in
