@@ -89,7 +89,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         tableView.keyboardDismissMode = .interactive
     }
     fileprivate func fetchCurrentUser() {
-        // fetch some Firestore Data
+
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
             if let err = err {
@@ -97,7 +97,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
                 return
             }
             
-            // fetched our user here
             guard let dictionary = snapshot?.data() else { return }
             self.user = User(dictionary: dictionary)
             self.loadUserPhotos()
@@ -106,8 +105,9 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         }
     }
     fileprivate func loadUserPhotos() {
+        
         guard let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) else { return }
-        // why exactly do we use this SDWebImageManager class to load our images?
+
         SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
             self.buttonImage1.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
@@ -150,14 +150,17 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         case 1:
             cell.textField.placeholder = "Enter Name"
             cell.textField.text = user?.name
+            cell.textField.addTarget(self, action: #selector(handleNameChange), for: .editingChanged)
         case 2:
             cell.textField.placeholder = "Enter Profession"
             cell.textField.text = user?.profession
+            cell.textField.addTarget(self, action: #selector(handleProfessionChange), for: .editingChanged)
         case 3:
             cell.textField.placeholder = "Enter Age"
             if let age = user?.age {
                 cell.textField.text = String(age)
             }
+            cell.textField.addTarget(self, action: #selector(handleAgeChange), for: .editingChanged)
         default:
             cell.textField.placeholder = "Enter Bio"
         }
@@ -185,9 +188,38 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     } 
     @objc fileprivate func handleSave() {
         
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Profile saving..."
+        hud.show(in: self.view)
+        
+        guard let document = Auth.auth().currentUser?.uid else {return}
+        let documentData: [String: Any] = [
+            "uid": document,
+            "fullName": user?.name ?? "",
+            "imageUrl1": user?.imageUrl1 ?? "",
+            "age": user?.age ?? "",
+            "profession": user?.profession ?? ""
+        ]
+        Firestore.firestore().collection("users").document(document).setData(documentData) { (err) in
+            hud.dismiss()
+            if let err = err {
+                print("Save error: ", err)
+                return
+            }
+            print("Finished saving user info")
+        }
     }
     @objc fileprivate func handleLogout() {
         
+    }
+    @objc fileprivate func handleNameChange(textfield: UITextField) {
+        self.user?.name = textfield.text
+    }
+    @objc fileprivate func handleProfessionChange(textfield: UITextField) {
+        self.user?.profession = textfield.text
+    }
+    @objc fileprivate func handleAgeChange(textfield: UITextField) {
+        self.user?.age = Int(textfield.text ?? "")
     }
 }
 extension SettingsController {
