@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
+import SDWebImage
 
 class SettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -14,6 +17,12 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
             super.drawText(in: rect.insetBy(dx: 16, dy: 0))
         }
     }
+    
+    class CustomImagePickerController: UIImagePickerController {
+        
+        var imageButton: UIButton?
+    }
+    
     lazy var buttonImage1 = createButton(selector: #selector(handleSelectPhoto))
     lazy var buttonImage2 = createButton(selector: #selector(handleSelectPhoto))
     lazy var buttonImage3 = createButton(selector: #selector(handleSelectPhoto))
@@ -50,17 +59,60 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         return header
         
     }()
-        
+    var user: User?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        
-        setupNavigationItems() 
-        tableView.tableFooterView = UIView()
-        tableView.keyboardDismissMode = .interactive
+        setupNavigationItems()
+        fetchCurrentUser()
         
     }
+    fileprivate func setupNavigationItems() {
+        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        navigationItem.title = "Settings"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave)),
+            UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        ]
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
+        tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .interactive
+    }
+    fileprivate func fetchCurrentUser() {
+        // fetch some Firestore Data
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            
+            // fetched our user here
+            guard let dictionary = snapshot?.data() else { return }
+            self.user = User(dictionary: dictionary)
+            self.loadUserPhotos()
+            
+            self.tableView.reloadData()
+        }
+    }
+    fileprivate func loadUserPhotos() {
+        guard let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) else { return }
+        // why exactly do we use this SDWebImageManager class to load our images?
+        SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+            self.buttonImage1.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+    }
+    // MARK: Tableview Confs.
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             return header
@@ -97,10 +149,15 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         switch indexPath.section {
         case 1:
             cell.textField.placeholder = "Enter Name"
+            cell.textField.text = user?.name
         case 2:
             cell.textField.placeholder = "Enter Profession"
+            cell.textField.text = user?.profession
         case 3:
             cell.textField.placeholder = "Enter Age"
+            if let age = user?.age {
+                cell.textField.text = String(age)
+            }
         default:
             cell.textField.placeholder = "Enter Bio"
         }
@@ -112,21 +169,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
             cell.textField.becomeFirstResponder()
         }
     }
-    fileprivate func setupNavigationItems() {
-        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        navigationItem.title = "Settings"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave)),
-            UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
-        ]
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
+    // MARK: Selectors
     @objc fileprivate func handleSelectPhoto(button: UIButton) {
         
         let imagePicker = CustomImagePickerController()
@@ -146,10 +189,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     @objc fileprivate func handleLogout() {
         
     }
-}
-class CustomImagePickerController: UIImagePickerController {
-    
-    var imageButton: UIButton?
 }
 extension SettingsController {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
