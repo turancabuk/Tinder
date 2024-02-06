@@ -25,8 +25,9 @@ class HomeController: UIViewController {
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefreshButton), for: .touchUpInside)
         
-//        setupFirestoreUserCards()
-//        fetchUsersFromFirestore()
+        setupFirestoreUserCards()
+        fetchUsersFromFirestore()
+
     }
     fileprivate func setupFirestoreUserCards() {
         cardViewModels.forEach { (cardVM) in
@@ -85,8 +86,9 @@ class HomeController: UIViewController {
     @objc func handleSettings() {
         
         let settingsController = SettingsController()
-        settingsController.modalPresentationStyle = .fullScreen
-        present(settingsController, animated: true, completion: nil)
+        let navigationController = UINavigationController(rootViewController: settingsController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true, completion: nil)
     }
     @objc fileprivate func handleRefreshButton() {
         
