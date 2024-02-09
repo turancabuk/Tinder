@@ -20,7 +20,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     }
     
     class CustomImagePickerController: UIImagePickerController {
-        
         var imageButton: UIButton?
     }
     
@@ -69,8 +68,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         
         setupNavigationItems()
         fetchCurrentUser()
-        
-        
+                
     }
     fileprivate func setupNavigationItems() {
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -98,7 +96,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
                 print(err)
                 return
             }
-            
             guard let dictionary = snapshot?.data() else { return }
             self.user = User(dictionary: dictionary)
             self.loadUserPhotos()
@@ -142,8 +139,10 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
             headerLabel.text = "Profession"
         case 3:
             headerLabel.text = "Age"
-        default:
+        case 4:
             headerLabel.text = "Bio"
+        default :
+            headerLabel.text = "Age Range"
         }
         return headerLabel
     }
@@ -161,6 +160,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         return section == 0 ? 0 : 1
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = SettingsCell(style: .default, reuseIdentifier: nil)
         
         switch indexPath.section {
@@ -181,7 +181,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         default:
             cell.textField.placeholder = "Enter Bio"
         }
-        
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
