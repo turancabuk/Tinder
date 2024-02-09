@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 import JGProgressHUD
 import SDWebImage
 
@@ -69,6 +70,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         setupNavigationItems()
         fetchCurrentUser()
         
+        
     }
     fileprivate func setupNavigationItems() {
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -105,11 +107,26 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         }
     }
     fileprivate func loadUserPhotos() {
-        
-        guard let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) else { return }
-
-        SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
-            self.buttonImage1.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        if let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) {
+            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+                DispatchQueue.main.async {
+                    self.buttonImage1.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+                }
+            }
+        }
+        if let imageUrl = user?.imageUrl2, let url = URL(string: imageUrl) {
+            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+                DispatchQueue.main.async {
+                    self.buttonImage2.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+                }
+            }
+        }
+        if let imageUrl = user?.imageUrl3, let url = URL(string: imageUrl) {
+            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+                DispatchQueue.main.async {
+                    self.buttonImage3.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+                }
+            }
         }
     }
     // MARK: Tableview Confs.
@@ -197,6 +214,8 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
             "uid": document,
             "fullName": user?.name ?? "",
             "imageUrl1": user?.imageUrl1 ?? "",
+            "imageUrl2": user?.imageUrl2 ?? "",
+            "imageUrl3": user?.imageUrl3 ?? "",
             "age": user?.age ?? "",
             "profession": user?.profession ?? ""
         ]
@@ -229,6 +248,43 @@ extension SettingsController {
         let imageButton = (picker as? CustomImagePickerController)?.imageButton
         imageButton!.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
         picker.dismiss(animated: true)
+        
+        let filename = UUID().uuidString
+        let ref = Storage.storage().reference(withPath: "/images/\(filename)")
+        guard let uploadData = selectedImage?.jpegData(compressionQuality: 0.75) else { return }
+        
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Uploading image..."
+        hud.show(in: view)
+        ref.putData(uploadData) { (nil, err) in
+            if let err = err {
+                hud.dismiss()
+                print("Failed to upload image to storage:", err)
+                return
+            }
+            
+            print("Finished uploading image")
+            ref.downloadURL(completion: { (url, err) in
+                
+                hud.dismiss()
+                
+                if let err = err {
+                    print("Failed to retrieve download URL:", err)
+                    return
+                }
+                
+                print("Finished getting download url:", url?.absoluteString ?? "")
+                
+                if imageButton == self.buttonImage1 {
+                    self.user?.imageUrl1 = url?.absoluteString
+                } else if imageButton == self.buttonImage2 {
+                    self.user?.imageUrl2 = url?.absoluteString
+                } else {
+                    self.user?.imageUrl3 = url?.absoluteString
+                }
+            })
+        }
+
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
