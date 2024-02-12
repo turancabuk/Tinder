@@ -68,7 +68,8 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         
         setupNavigationItems()
         fetchCurrentUser()
-                
+
+
     }
     fileprivate func setupNavigationItems() {
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -89,7 +90,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         tableView.keyboardDismissMode = .interactive
     }
     fileprivate func fetchCurrentUser() {
-
+        
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
             if let err = err {
@@ -99,7 +100,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
             guard let dictionary = snapshot?.data() else { return }
             self.user = User(dictionary: dictionary)
             self.loadUserPhotos()
-            
             self.tableView.reloadData()
         }
     }
@@ -226,9 +226,12 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
             }
             print("Finished saving user info")
         }
+        self.dismiss(animated: true)
     }
     @objc fileprivate func handleLogout() {
-        
+
+        try? Auth.auth().signOut()
+        dismiss(animated: true)
     }
     @objc fileprivate func handleNameChange(textfield: UITextField) {
         self.user?.name = textfield.text
