@@ -10,13 +10,17 @@ import Firebase
 import FirebaseFirestore
 import JGProgressHUD
 
-class HomeController: UIViewController {
+class HomeController: UIViewController, LoginControllerDelegate {
+    
     
     let topStackView = TopNavigationStackView()
     let carDeckView = UIView()
     let bottomControls = HomeBottomControlsStackView()
-    var cardViewModels = [CardViewModel]()
     
+    var cardViewModels = [CardViewModel]()
+    var user: User?
+    var lastFetchedUser: User?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +31,18 @@ class HomeController: UIViewController {
         
         setupFirestoreUserCards()
         fetchUsersFromFirestore()
-
+        fetchCurrentUser()
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+  
+        if Auth.auth().currentUser == nil {
+            let loginController = LoginController()
+            let navController = UINavigationController(rootViewController: loginController)
+            navController.modalPresentationStyle = .fullScreen
+            present(navController, animated: true)
+        }
     }
     fileprivate func setupFirestoreUserCards() {
         cardViewModels.forEach { (cardVM) in
@@ -43,6 +58,7 @@ class HomeController: UIViewController {
         ])
         overAllStackView.axis = .vertical
         view.addSubview(overAllStackView)
+        view.backgroundColor = .white
         overAllStackView.anchor(
             top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
         overAllStackView.isLayoutMarginsRelativeArrangement = true
@@ -50,13 +66,23 @@ class HomeController: UIViewController {
         
         overAllStackView.bringSubviewToFront(carDeckView)
     }
+    fileprivate func fetchCurrentUser() {
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            guard let dictionary = snapshot?.data() else { return }
+            self.user = User(dictionary: dictionary)
+        }
+    }
     fileprivate func fetchUsersFromFirestore() {
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
-
-        var lastFetchedUser: User?
-
+                
         // querry filtering with "where"
         let query = Firestore.firestore().collection("users")
         query.getDocuments { (snapshot, err) in
@@ -70,10 +96,13 @@ class HomeController: UIViewController {
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 self.cardViewModels.append(user.toCardViewModel())
-                lastFetchedUser = user
+                self.lastFetchedUser = user
                 self.setupCardFromUser(user: user)
             })
         }
+    }
+    func didFinishLoggingIn() {
+        fetchCurrentUser()
     }
     fileprivate func setupCardFromUser(user: User) {
         let cardView = CardView(frame: .zero)

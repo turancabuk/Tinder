@@ -76,6 +76,7 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
         button.heightAnchor.constraint(equalToConstant: 22).isActive = true
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     
@@ -184,14 +185,23 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
             if let err = err {
                 self?.showHUDWithError(error: err)
                 return
+            }else{
+                let homeController = HomeController()
+                homeController.modalPresentationStyle = .fullScreen
+                self?.present(homeController, animated: true)
             }
         }
     }
+    @objc fileprivate func handleLogin() {
+        let loginController = LoginController()
+        loginController.modalPresentationStyle = .fullScreen
+        self.present(loginController, animated: true)
+    }
     fileprivate func showHUDWithError(error: Error) {
-         
+          
         hud.textLabel.text = "Failed to Registeration \n \(error.localizedDescription)"
         hud.show(in: self.view)
-        hud.dismiss(afterDelay: 12.5)
+        hud.dismiss(afterDelay: 2.5)
     }
     @objc fileprivate func handleSelectPhoto() {
         
