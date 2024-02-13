@@ -7,36 +7,60 @@
 
 import UIKit
 
-class DetailController: UIViewController {
+class DetailController: UIViewController, UIScrollViewDelegate {
 
-    var cardViewModel: CardViewModel! {
-        didSet {
-            let imageName = cardViewModel.imageNames.first ?? ""
-            if let url = URL(string: imageName) {
-                imageView.sd_setImage(with: url)
-            }
-            informationLabel.attributedText = cardViewModel.attributedString
-            informationLabel.textAlignment = cardViewModel.textAlignment
-            
-            (0..<cardViewModel.imageNames.count).forEach { (_) in
-                let barView = UIView()
-                barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
-                barView.layer.cornerRadius = 6
-                barStackView.addArrangedSubview(barView)
-            }
-            barStackView.arrangedSubviews.first?.backgroundColor = .white
-            setupImageIndexObserver()
-        }
-    }
+//    var cardViewModel: CardViewModel! {
+//        didSet {
+//            let imageName = cardViewModel.imageNames.first ?? ""
+//            if let url = URL(string: imageName) {
+//                imageView.sd_setImage(with: url)
+//            }
+//            informationLabel.attributedText = cardViewModel.attributedString
+//            informationLabel.textAlignment = cardViewModel.textAlignment
+//            
+//            (0..<cardViewModel.imageNames.count).forEach { (_) in
+//                let barView = UIView()
+//                barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
+//                barView.layer.cornerRadius = 6
+//                barStackView.addArrangedSubview(barView)
+//            }
+//            barStackView.arrangedSubviews.first?.backgroundColor = .white
+//            setupImageIndexObserver()
+//        }
+//    }
+    
+    lazy var scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.alwaysBounceVertical = true
+        sv.contentInsetAdjustmentBehavior = .never
+        sv.delegate = self
+        return sv
+    }()
     
     let imageView: UIImageView = {
         let image = UIImageView()
         image.heightAnchor.constraint(equalToConstant: 500).isActive = true
         image.backgroundColor = .white
+        image.clipsToBounds = true
+        image.image = UIImage(named: "fred")
         return image
     }()
     
-    fileprivate var informationLabel = UILabel()
+    let informationLabel: UILabel = {
+        let label = UILabel()
+        label.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        label.text = "User Name 30\nDoctor\n Some Bio text down below"
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    var bottomStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        return sv
+    }()
+    
     fileprivate var barStackView = UIStackView()
     let dislikeButton = createButton(image: #imageLiteral(resourceName: "dismiss_circle"))
     let superLikeButton = createButton(image: #imageLiteral(resourceName: "super_like_circle"))
@@ -52,22 +76,20 @@ class DetailController: UIViewController {
     }
     fileprivate func setupLayout() {
         
-        view.addSubview(imageView)
-        imageView.anchor(
-            top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
+        view.addSubview(scrollView)
+        scrollView.fillSuperview()
         
-        view.addSubview(informationLabel)
-        informationLabel.backgroundColor = .white
-        informationLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        informationLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        scrollView.addSubview(imageView)
+        imageView.frame = CGRect(
+            x: 0, y: 0, width: view.frame.width, height: view.frame.width)
         
+        scrollView.addSubview(informationLabel)
         informationLabel.anchor(
-            top: imageView.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(
+            top: imageView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: .init(
                 top: 16, left: 16, bottom: 0, right: 0))
         
-        let bottomStackView = UIStackView(arrangedSubviews: [dislikeButton, superLikeButton, likeButton])
+        bottomStackView = UIStackView(arrangedSubviews: [dislikeButton, superLikeButton, likeButton])
         view.addSubview(bottomStackView)
-        bottomStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         bottomStackView.distribution = .fillEqually
         bottomStackView.anchor(
             top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(
@@ -79,16 +101,24 @@ class DetailController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFill
         return button
     }
-    fileprivate func setupImageIndexObserver() {
-        cardViewModel.imageIndexObserver = { [weak self] (idx,imageUrl) in
- 
-            if let url = URL(string: imageUrl ?? "") {
-                self?.imageView.sd_setImage(with: url)
-            }
-            self?.barStackView.arrangedSubviews.forEach({ (v) in
-                v.backgroundColor = UIColor(white: 0, alpha: 0.1)
-            })
-            self?.barStackView.arrangedSubviews[idx].backgroundColor = .white
-        }
+//    fileprivate func setupImageIndexObserver() {
+//        cardViewModel.imageIndexObserver = { [weak self] (idx,imageUrl) in
+// 
+//            if let url = URL(string: imageUrl ?? "") {
+//                self?.imageView.sd_setImage(with: url)
+//            }
+//            self?.barStackView.arrangedSubviews.forEach({ (v) in
+//                v.backgroundColor = UIColor(white: 0, alpha: 0.1)
+//            })
+//            self?.barStackView.arrangedSubviews[idx].backgroundColor = .white
+//        }
+//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // for Stretchy Header Frame
+        let changeY = -scrollView.contentOffset.y
+        var width = view.frame.width + changeY * 2
+        width = max(view.frame.width, width)
+        imageView.frame = CGRect(
+            x: min(0, -changeY), y: min(0, -changeY), width: width, height: width)
     }
 }
