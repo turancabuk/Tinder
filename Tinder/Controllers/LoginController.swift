@@ -136,7 +136,10 @@ class LoginController: UIViewController {
         }
     }
     @objc fileprivate func handleBacktoRegister() {
-        self.dismiss(animated: true)
+        
+        let registerController = RegistrationController()
+        registerController.modalPresentationStyle = .fullScreen
+        present(registerController, animated: true)
     }
     @objc fileprivate func handleDismissKeyboard() {
         view.endEditing(true)
