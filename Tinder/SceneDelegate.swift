@@ -19,11 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         let currentUser = Auth.auth().currentUser
+        
         if currentUser != nil {
             window?.rootViewController = HomeController()
         }else{
             window?.rootViewController = RegistrationController()
         }
+//        window?.rootViewController = DetailController()
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }

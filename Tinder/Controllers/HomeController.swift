@@ -10,13 +10,13 @@ import Firebase
 import FirebaseFirestore
 import JGProgressHUD
 
-class HomeController: UIViewController, LoginControllerDelegate {
+class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegate {
     
     
     let topStackView = TopNavigationStackView()
     let carDeckView = UIView()
     let bottomControls = HomeBottomControlsStackView()
-    
+     
     var cardViewModels = [CardViewModel]()
     var user: User?
     var lastFetchedUser: User?
@@ -78,6 +78,9 @@ class HomeController: UIViewController, LoginControllerDelegate {
             self.user = User(dictionary: dictionary)
         }
     }
+    func didFinishLoggingIn() {
+        fetchCurrentUser()
+    }
     fileprivate func fetchUsersFromFirestore() {
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
@@ -95,21 +98,24 @@ class HomeController: UIViewController, LoginControllerDelegate {
             snapshot?.documents.forEach({ (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                self.cardViewModels.append(user.toCardViewModel())
-                self.lastFetchedUser = user
-                self.setupCardFromUser(user: user)
+                if user.uid != Auth.auth().currentUser?.uid {
+                    self.setupCardFromUser(user: user)
+                }
             })
         }
     }
-    func didFinishLoggingIn() {
-        fetchCurrentUser()
-    }
     fileprivate func setupCardFromUser(user: User) {
         let cardView = CardView(frame: .zero)
+        cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         carDeckView.addSubview(cardView)
         carDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+    }
+    func didTapInfoButton() {
+        let detailController = DetailController()
+        detailController.modalPresentationStyle = .fullScreen
+        present(detailController, animated: true)
     }
     // MARK: Button Confs.
     @objc func handleSettings() {
