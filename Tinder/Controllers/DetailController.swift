@@ -6,28 +6,17 @@
 //
 
 import UIKit
+import SDWebImage
 
 class DetailController: UIViewController, UIScrollViewDelegate {
 
-//    var cardViewModel: CardViewModel! {
-//        didSet {
-//            let imageName = cardViewModel.imageNames.first ?? ""
-//            if let url = URL(string: imageName) {
-//                imageView.sd_setImage(with: url)
-//            }
-//            informationLabel.attributedText = cardViewModel.attributedString
-//            informationLabel.textAlignment = cardViewModel.textAlignment
-//            
-//            (0..<cardViewModel.imageNames.count).forEach { (_) in
-//                let barView = UIView()
-//                barView.backgroundColor = UIColor(white: 0, alpha: 0.1)
-//                barView.layer.cornerRadius = 6
-//                barStackView.addArrangedSubview(barView)
-//            }
-//            barStackView.arrangedSubviews.first?.backgroundColor = .white
-//            setupImageIndexObserver()
-//        }
-//    }
+    var cardViewModel: CardViewModel! {
+        didSet {
+            informationLabel.attributedText = cardViewModel.attributedString
+            guard let firstImageUrl = cardViewModel.imageNames.first, let url = URL(string: firstImageUrl) else {return}
+            imageView.sd_setImage(with: url)
+        }
+    }
     
     lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -41,8 +30,8 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         let image = UIImageView()
         image.heightAnchor.constraint(equalToConstant: 500).isActive = true
         image.backgroundColor = .white
+        image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
-        image.image = UIImage(named: "fred")
         return image
     }()
     
@@ -55,6 +44,15 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         return label
     }()
     
+    var dismissButton: UIButton = {
+        var button = UIButton(type: .system)
+        button.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        button.setImage(UIImage(named: "dismiss")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleDismissButton), for: .touchUpInside)
+        return button
+    }()
+    
     var bottomStackView: UIStackView = {
         let sv = UIStackView()
         sv.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -62,26 +60,32 @@ class DetailController: UIViewController, UIScrollViewDelegate {
     }()
     
     fileprivate var barStackView = UIStackView()
-    let dislikeButton = createButton(image: #imageLiteral(resourceName: "dismiss_circle"))
-    let superLikeButton = createButton(image: #imageLiteral(resourceName: "super_like_circle"))
-    let likeButton = createButton(image: #imageLiteral(resourceName: "like_circle"))
+    lazy var dislikeButton = createButton(image: #imageLiteral(resourceName: "dismiss_circle"), selector: #selector(handleDisLike))
+    lazy var superLikeButton = createButton(image: #imageLiteral(resourceName: "super_like_circle"), selector: #selector(handleSuperLike))
+    lazy var likeButton = createButton(image: #imageLiteral(resourceName: "like_circle"), selector: #selector(handleLike))
 
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
          
-        view.backgroundColor = .white
         setupLayout()
+        setupBlurEffect()
     }
     fileprivate func setupLayout() {
-        
+
+        view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.fillSuperview()
+        
         
         scrollView.addSubview(imageView)
         imageView.frame = CGRect(
             x: 0, y: 0, width: view.frame.width, height: view.frame.width)
+        
+        scrollView.addSubview(dismissButton)
+        dismissButton.anchor(
+            top: imageView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(
+                top: -28, left: 0, bottom: 0, right: 16))
         
         scrollView.addSubview(informationLabel)
         informationLabel.anchor(
@@ -93,26 +97,23 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         bottomStackView.distribution = .fillEqually
         bottomStackView.anchor(
             top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(
-                top: 0, left: 50, bottom: 16, right: 50))
+                top: 0, left: 50, bottom: 32, right: 50))
     }
-    static func createButton(image: UIImage) -> UIButton {
+    fileprivate func setupBlurEffect() {
+        let effect = UIBlurEffect(style: .regular)
+        let visualEffectView = UIVisualEffectView(effect: effect)
+        
+        view.addSubview(visualEffectView)
+        visualEffectView.anchor(
+            top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
+    }
+    fileprivate func createButton(image: UIImage, selector: Selector) -> UIButton {
         let button = UIButton(type: .system)
         button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: selector, for: .touchUpInside)
         return button
     }
-//    fileprivate func setupImageIndexObserver() {
-//        cardViewModel.imageIndexObserver = { [weak self] (idx,imageUrl) in
-// 
-//            if let url = URL(string: imageUrl ?? "") {
-//                self?.imageView.sd_setImage(with: url)
-//            }
-//            self?.barStackView.arrangedSubviews.forEach({ (v) in
-//                v.backgroundColor = UIColor(white: 0, alpha: 0.1)
-//            })
-//            self?.barStackView.arrangedSubviews[idx].backgroundColor = .white
-//        }
-//    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // for Stretchy Header Frame
         let changeY = -scrollView.contentOffset.y
@@ -120,5 +121,17 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         width = max(view.frame.width, width)
         imageView.frame = CGRect(
             x: min(0, -changeY), y: min(0, -changeY), width: width, height: width)
+    }
+    @objc fileprivate func handleDismissButton() {
+        self.dismiss(animated: true)
+    }
+    @objc  func handleDisLike() {
+        print("***hello***")
+    }
+    @objc  func handleSuperLike() {
+        print("***hello1***")
+    }
+    @objc  func handleLike() {
+        print("***hello2***")
     }
 }
