@@ -112,8 +112,10 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         carDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
     }
-    func didTapInfoButton() {
+    func didTapInfoButton(cardViewModel: CardViewModel) {
+        print("Home Controller: ", cardViewModel.attributedString)
         let detailController = DetailController()
+        detailController.cardViewModel = cardViewModel        
         detailController.modalPresentationStyle = .fullScreen
         present(detailController, animated: true)
     }

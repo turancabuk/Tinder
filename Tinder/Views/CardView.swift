@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 protocol CardViewDelegate {
-    func didTapInfoButton()
+    func didTapInfoButton(cardViewModel: CardViewModel)
 }
 class CardView: UIView {
     
@@ -172,7 +172,7 @@ class CardView: UIView {
         }
     }
     @objc fileprivate func handleIndex() {
-        delegate?.didTapInfoButton()
+        delegate?.didTapInfoButton(cardViewModel: cardViewModel)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
