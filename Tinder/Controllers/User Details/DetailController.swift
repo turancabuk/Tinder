@@ -13,8 +13,7 @@ class DetailController: UIViewController, UIScrollViewDelegate {
     var cardViewModel: CardViewModel! {
         didSet {
             informationLabel.attributedText = cardViewModel.attributedString
-            guard let firstImageUrl = cardViewModel.imageNames.first, let url = URL(string: firstImageUrl) else {return}
-            imageView.sd_setImage(with: url)
+            swipingPhotoController.cardViewModel = cardViewModel
         }
     }
     
@@ -26,15 +25,8 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
-    let imageView: UIImageView = {
-        let image = UIImageView()
-        image.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        image.backgroundColor = .white
-        image.contentMode = .scaleAspectFill
-        image.clipsToBounds = true
-        return image
-    }()
-    
+    let swipingPhotoController = SwipingPhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+
     let informationLabel: UILabel = {
         let label = UILabel()
         label.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -70,6 +62,8 @@ class DetailController: UIViewController, UIScrollViewDelegate {
          
         setupLayout()
         setupBlurEffect()
+        
+        
     }
     fileprivate func setupLayout() {
 
@@ -77,19 +71,17 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         view.addSubview(scrollView)
         scrollView.fillSuperview()
         
-        
-        scrollView.addSubview(imageView)
-        imageView.frame = CGRect(
-            x: 0, y: 0, width: view.frame.width, height: view.frame.width)
+        let swipingView = swipingPhotoController.view!
+        scrollView.addSubview(swipingView)
         
         scrollView.addSubview(dismissButton)
         dismissButton.anchor(
-            top: imageView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(
+            top: swipingView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(
                 top: -28, left: 0, bottom: 0, right: 16))
         
         scrollView.addSubview(informationLabel)
         informationLabel.anchor(
-            top: imageView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: .init(
+            top: swipingView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: .init(
                 top: 16, left: 16, bottom: 0, right: 0))
         
         bottomStackView = UIStackView(arrangedSubviews: [dislikeButton, superLikeButton, likeButton])
@@ -98,6 +90,11 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         bottomStackView.anchor(
             top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(
                 top: 0, left: 50, bottom: 32, right: 50))
+    }
+    override func viewWillLayoutSubviews() {
+        let swipingView = swipingPhotoController.view!
+        swipingView.frame = CGRect(
+            x: 0, y: 0, width: view.frame.width, height: view.frame.width)
     }
     fileprivate func setupBlurEffect() {
         let effect = UIBlurEffect(style: .regular)
@@ -119,6 +116,7 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         let changeY = -scrollView.contentOffset.y
         var width = view.frame.width + changeY * 2
         width = max(view.frame.width, width)
+        let imageView = swipingPhotoController.view!
         imageView.frame = CGRect(
             x: min(0, -changeY), y: min(0, -changeY), width: width, height: width)
     }
