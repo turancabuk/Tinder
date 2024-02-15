@@ -20,12 +20,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let currentUser = Auth.auth().currentUser
         
-        if currentUser != nil {
-            window?.rootViewController = HomeController()
-        }else{
-            window?.rootViewController = RegistrationController()
-        }
-//        window?.rootViewController = DetailController()
+//        if currentUser != nil {
+//            window?.rootViewController = HomeController()
+//        }else{
+//            window?.rootViewController = RegistrationController()
+//        }
+        window?.rootViewController = SwipingPhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }
