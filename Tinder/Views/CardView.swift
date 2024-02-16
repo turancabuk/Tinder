@@ -60,10 +60,10 @@ class CardView: UIView {
         addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
         
-        setLayout()
+        setupLayout()
     }
     // MARK: Layout Confs.
-    fileprivate func setLayout() {
+    fileprivate func setupLayout() {
         layer.cornerRadius = 10
         clipsToBounds = true
         
@@ -163,7 +163,7 @@ class CardView: UIView {
         cardViewModel.imageIndexObserver = { [weak self] (idx,imageUrl) in
  
             if let url = URL(string: imageUrl ?? "") {
-                self?.imageView.sd_setImage(with: url)
+                self?.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "questionMark"), options: .continueInBackground)
             }
             self?.barStackView.arrangedSubviews.forEach({ (v) in
                 v.backgroundColor = UIColor(white: 0, alpha: 0.1)

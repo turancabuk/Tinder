@@ -63,6 +63,7 @@
 		5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D32B68D8E90041B9DA /* Advertiser.swift */; };
 		5C8844D62B6A4E270041B9DA /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D52B6A4E270041B9DA /* RegistrationController.swift */; };
 		5C8844D82B6ABBBF0041B9DA /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D72B6ABBBF0041B9DA /* CustomTextfield.swift */; };
+		5CBA60602B7FED7900127118 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBA605F2B7FED7900127118 /* PhotoController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		5C8844D32B68D8E90041B9DA /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		5C8844D52B6A4E270041B9DA /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		5C8844D72B6ABBBF0041B9DA /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
+		5CBA605F2B7FED7900127118 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 			children = (
 				5C3A46DF2B7B55AB00DB0C9C /* DetailController.swift */,
 				5C3A46E52B7CEB4000DB0C9C /* SwipingPhotosController.swift */,
+				5CBA605F2B7FED7900127118 /* PhotoController.swift */,
 			);
 			path = "User Details";
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C588FA32B7A1A1200CD7478 /* LoginController.swift in Sources */,
+				5CBA60602B7FED7900127118 /* PhotoController.swift in Sources */,
 				5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */,
 				5C8844C92B678FB40041B9DA /* CardView.swift in Sources */,
 				5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */,
