@@ -51,7 +51,6 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         return sv
     }()
     
-    fileprivate var barStackView = UIStackView()
     lazy var dislikeButton = createButton(image: #imageLiteral(resourceName: "dismiss_circle"), selector: #selector(handleDisLike))
     lazy var superLikeButton = createButton(image: #imageLiteral(resourceName: "super_like_circle"), selector: #selector(handleSuperLike))
     lazy var likeButton = createButton(image: #imageLiteral(resourceName: "like_circle"), selector: #selector(handleLike))
@@ -90,11 +89,12 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         bottomStackView.anchor(
             top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(
                 top: 0, left: 50, bottom: 32, right: 50))
+        
     }
     override func viewWillLayoutSubviews() {
         let swipingView = swipingPhotoController.view!
         swipingView.frame = CGRect(
-            x: 0, y: 0, width: view.frame.width, height: view.frame.width)
+            x: 0, y: 0, width: view.frame.width, height: view.frame.width + 180)
     }
     fileprivate func setupBlurEffect() {
         let effect = UIBlurEffect(style: .regular)
