@@ -169,7 +169,7 @@ class CardView: UIView {
                 v.backgroundColor = UIColor(white: 0, alpha: 0.1)
             })
             self?.barStackView.arrangedSubviews[idx].backgroundColor = .white
-        }
+        } 
     }
     @objc fileprivate func handleIndex() {
         delegate?.didTapInfoButton(cardViewModel: cardViewModel)
