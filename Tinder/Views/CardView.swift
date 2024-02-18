@@ -136,7 +136,6 @@ class CardView: UIView {
     }
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
-        // rotation
         let degrees: CGFloat = translation.x / 20
         let angle = degrees * .pi / 180
         
@@ -147,18 +146,18 @@ class CardView: UIView {
         let translationDirection: CGFloat = gesture.translation(in: nil).x > 0 ? 1 : -1
         let shouldDismissCard = abs(gesture.translation(in: nil).x) > threshold
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-            if shouldDismissCard {
-                self.frame = CGRect(x: 600 * translationDirection, y: 0, width: self.frame.width, height: self.frame.height)
-            } else {
-                self.transform = .identity
-            }
+        if shouldDismissCard {
+            // Accesing the HomeController selectors.
+            guard let homeController = delegate as? HomeController else {return}
             
-        }) { (_) in
-            self.transform = .identity
-            if shouldDismissCard {
-                self.removeFromSuperview()
+            if translationDirection == 1 {
+                homeController.handleLike()
+            }else{
+                homeController.handleDislike()
             }
+        }else{
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                self.transform = .identity})
         }
     }
     fileprivate func setupImageIndexObserver() {

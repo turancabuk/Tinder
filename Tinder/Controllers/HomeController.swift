@@ -16,12 +16,12 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     let topStackView = TopNavigationStackView()
     let carDeckView = UIView()
     let bottomControls = HomeBottomControlsStackView()
-     
+    
     var cardViewModels = [CardViewModel]()
     var user: User?
     var lastFetchedUser: User?
     var topCardView: CardView?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,7 +39,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-  
+        
         if Auth.auth().currentUser == nil {
             let loginController = LoginController()
             let navController = UINavigationController(rootViewController: loginController)
@@ -88,7 +88,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
-                
+        
         // querry filtering with "where"
         let query = Firestore.firestore().collection("users")
         query.getDocuments { (snapshot, err) in
@@ -130,7 +130,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     func didTapInfoButton(cardViewModel: CardViewModel) {
         print("Home Controller: ", cardViewModel.attributedString)
         let detailController = DetailController()
-        detailController.cardViewModel = cardViewModel        
+        detailController.cardViewModel = cardViewModel
         detailController.modalPresentationStyle = .fullScreen
         present(detailController, animated: true)
     }
@@ -156,6 +156,33 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         cardView?.layer.add(rotationAnimation, forKey: "rotation")
         CATransaction.commit()
     }
+    fileprivate func saveSwipeToFirestore(didLike: Int) {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        guard let cardUID = topCardView?.cardViewModel.uid else {return}
+        let documnetData = [cardUID: didLike]
+        
+        Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, err) in
+            if let err = err{
+                print("Failed to save swiped data: ", err)
+                return
+            }
+            if snapshot?.exists == true {
+                Firestore.firestore().collection("swipes").document(uid).updateData(documnetData) { (err) in
+                    if let err = err{
+                        print("Failed to save swiped data: ", err)
+                        return
+                    }
+                }
+            }else{
+                Firestore.firestore().collection("swipes").document(uid).setData(documnetData) { (err) in
+                    if let err = err{
+                        print("Failed to save swiped data: ", err)
+                        return
+                    }
+                }
+            }
+        }
+    }
     // MARK: Button Confs.
     @objc func handleSettings() {
         
@@ -168,10 +195,12 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         
         self.fetchUsersFromFirestore()
     }
-    @objc fileprivate func handleLike() {
+    @objc func handleLike() {
+        saveSwipeToFirestore(didLike: 1)
         performSwipeAnimation(translation: 700, angle: 15)
     }
-    @objc fileprivate func handleDislike() {
+    @objc func handleDislike() {
+        saveSwipeToFirestore(didLike: 0)
         performSwipeAnimation(translation: -700, angle: -15)
     }
 }
