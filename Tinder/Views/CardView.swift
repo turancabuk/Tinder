@@ -10,6 +10,7 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapInfoButton(cardViewModel: CardViewModel)
+    func didRemoveCard(cardView: CardView)
 }
 class CardView: UIView {
     
@@ -52,6 +53,7 @@ class CardView: UIView {
     // Configurations
     fileprivate let threshold: CGFloat = 80
     var delegate: CardViewDelegate?  
+    var nextCardView: CardView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
