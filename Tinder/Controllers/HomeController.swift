@@ -187,7 +187,9 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
                         print("Failed to save swiped data: ", err)
                         return
                     }
-                    self.checkMatch(cardUID: cardUID)
+                    if didLike == 1 {
+                        self.checkMatch(cardUID: cardUID)
+                    }
                 }
             }else{
                 Firestore.firestore().collection("swipes").document(uid).setData(documnetData) { (err) in
@@ -195,7 +197,9 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
                         print("Failed to save swiped data: ", err)
                         return
                     }
-                    self.checkMatch(cardUID: cardUID)
+                    if didLike == 1 {
+                        self.checkMatch(cardUID: cardUID)
+                    }
                 }
             }
         }
@@ -214,14 +218,14 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
             
             if hasMatched {
                 print("its Match!!!")
-                let hud = JGProgressHUD(style: .dark)
-                hud.show(in: self.view)
-                hud.textLabel.text = "Its a Match!!!"
-                hud.dismiss(afterDelay: 3.0)
-            }else{
-                print("no Match :(")
+                self.presentMatchView(cardUID: cardUID)
             }
         }
+    }
+    fileprivate func presentMatchView(cardUID: String) {
+        let matchView = MatchView()
+        view.addSubview(matchView)
+        matchView.fillSuperview()
     }
     // MARK: Button Confs.
     @objc func handleSettings() {
@@ -232,6 +236,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         present(navigationController, animated: true, completion: nil)
     }
     @objc fileprivate func handleRefreshButton() {
+        carDeckView.subviews.forEach({$0.removeFromSuperview()})
         self.fetchUsersFromFirestore()
     }
     @objc func handleLike() {
@@ -243,4 +248,3 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         performSwipeAnimation(translation: -700, angle: -15)
     }
 }
-
