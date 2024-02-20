@@ -6,9 +6,31 @@
 //
 
 import UIKit
+import Firebase
 
 class MatchView: UIView {
     
+    var cardUID: String! {
+        didSet {
+            Firestore.firestore().collection("users").document(cardUID).getDocument { (snapShot, err) in
+                if let err = err {
+                    print("Error: ", err)
+                    return
+                }
+                guard let dictionary = snapShot?.data() else {return}
+                let user = User(dictionary: dictionary)
+                guard let url = URL(string: user.imageUrl1 ?? "") else {return}
+                self.currentUserImageView.sd_setImage(with: url)
+                self.cardUserImageView.alpha = 1
+            }
+        }
+    }
+    var currentUser: User! {
+        didSet {
+            guard let URL = URL(string: currentUser.imageUrl1 ?? "") else {return}
+            self.cardUserImageView.sd_setImage(with: URL)
+        }
+    }
     fileprivate let matchView: UIImageView = {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "match"))
         return imageView
@@ -22,7 +44,7 @@ class MatchView: UIView {
         return label
     }()
     fileprivate let currentUserImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "fred"))
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 2
@@ -30,11 +52,12 @@ class MatchView: UIView {
         return imageView
     }()
     fileprivate let cardUserImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "kelly3"))
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.alpha = 0
         return imageView
     }()
     fileprivate let messageButton: UIButton = {

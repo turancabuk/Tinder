@@ -225,6 +225,8 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     fileprivate func presentMatchView(cardUID: String) {
         let matchView = MatchView()
         view.addSubview(matchView)
+        matchView.cardUID = cardUID
+        matchView.currentUser = self.user
         matchView.fillSuperview()
     }
     // MARK: Button Confs.
