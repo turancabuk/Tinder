@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5C1A654E2B83A84200BD8E4D /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A654D2B83A84200BD8E4D /* Extension+UIView.swift */; };
 		5C1A65502B83B76D00BD8E4D /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A654F2B83B76D00BD8E4D /* MatchView.swift */; };
+		5C1A65522B84BF5200BD8E4D /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A65512B84BF5200BD8E4D /* GradientButton.swift */; };
+		5C1A65542B84C26200BD8E4D /* GradientButtonBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A65532B84C26200BD8E4D /* GradientButtonBorder.swift */; };
 		5C1B0DB32B6524810094915B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B0DB22B6524810094915B /* AppDelegate.swift */; };
 		5C1B0DB52B6524810094915B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B0DB42B6524810094915B /* SceneDelegate.swift */; };
 		5C1B0DB72B6524810094915B /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B0DB62B6524810094915B /* HomeController.swift */; };
@@ -71,6 +73,8 @@
 /* Begin PBXFileReference section */
 		5C1A654D2B83A84200BD8E4D /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		5C1A654F2B83B76D00BD8E4D /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		5C1A65512B84BF5200BD8E4D /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		5C1A65532B84C26200BD8E4D /* GradientButtonBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButtonBorder.swift; sourceTree = "<group>"; };
 		5C1B0DAF2B6524810094915B /* Tinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C1B0DB22B6524810094915B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C1B0DB42B6524810094915B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -212,6 +216,8 @@
 				5C8844CD2B67C5640041B9DA /* VerticalStackView.swift */,
 				5C8844C12B6537930041B9DA /* Extensions+UIView.swift */,
 				5C1A654D2B83A84200BD8E4D /* Extension+UIView.swift */,
+				5C1A65512B84BF5200BD8E4D /* GradientButton.swift */,
+				5C1A65532B84C26200BD8E4D /* GradientButtonBorder.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -374,6 +380,7 @@
 				5C1A654E2B83A84200BD8E4D /* Extension+UIView.swift in Sources */,
 				5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */,
 				5C8844C92B678FB40041B9DA /* CardView.swift in Sources */,
+				5C1A65542B84C26200BD8E4D /* GradientButtonBorder.swift in Sources */,
 				5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */,
 				5C1A65502B83B76D00BD8E4D /* MatchView.swift in Sources */,
 				5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */,
@@ -392,6 +399,7 @@
 				5C8844C22B6537930041B9DA /* Extensions+UIView.swift in Sources */,
 				5C8844D62B6A4E270041B9DA /* RegistrationController.swift in Sources */,
 				5C8844D82B6ABBBF0041B9DA /* CustomTextfield.swift in Sources */,
+				5C1A65522B84BF5200BD8E4D /* GradientButton.swift in Sources */,
 				5C3A46E62B7CEB4000DB0C9C /* SwipingPhotosController.swift in Sources */,
 				5C1B0DB52B6524810094915B /* SceneDelegate.swift in Sources */,
 			);
