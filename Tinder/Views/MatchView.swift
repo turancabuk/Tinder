@@ -9,6 +9,18 @@ import UIKit
 
 class MatchView: UIView {
     
+    fileprivate let matchView: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "match"))
+        return imageView
+    }()
+    fileprivate let matchLabel: UILabel = {
+        let label = UILabel()
+        label.text = "You and X have liked each other"
+        label.font = .systemFont(ofSize: 18)
+        label.textColor = .white
+        label.numberOfLines = 0
+        return label
+    }()
     fileprivate let currentUserImageView: UIImageView = {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "fred"))
         imageView.contentMode = .scaleAspectFill
@@ -25,6 +37,18 @@ class MatchView: UIView {
         imageView.layer.borderColor = UIColor.white.cgColor
         return imageView
     }()
+    fileprivate let messageButton: UIButton = {
+        let button = GradientButton(type: .system)
+        button.setTitle("SEND MESSAGE", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
+    fileprivate let swipingButton: UIButton = {
+        let button = GradientButtonBorder(type: .system)
+        button.setTitle("Keep Swiping", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -33,7 +57,24 @@ class MatchView: UIView {
 
     }
     fileprivate func setupLayout() {
+        addSubview(matchView)
+        addSubview(matchLabel)
         addSubview(currentUserImageView)
+        addSubview(cardUserImageView)
+        addSubview(messageButton)
+        addSubview(swipingButton)
+
+        matchView.anchor(
+            top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(
+                top: 170, left: 16, bottom: 0, right: 16), size: .init(
+                    width: 100, height: 100))
+        
+        matchLabel.textAlignment = .center
+        matchLabel.anchor(
+            top: matchView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(
+                top: 16, left: 0, bottom: 0, right: 0), size: .init(
+                    width: 40, height: 40))
+        
         currentUserImageView.anchor(
             top: nil, leading: nil, bottom: nil, trailing: centerXAnchor, padding: .init(
                 top: 0, left: 0, bottom: 0, right: 16), size: .init(
@@ -41,13 +82,22 @@ class MatchView: UIView {
         currentUserImageView.layer.cornerRadius = 140 / 2
         currentUserImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
-        addSubview(cardUserImageView)
         cardUserImageView.anchor(
             top: nil, leading: centerXAnchor, bottom: nil, trailing: nil, padding: .init(
                 top: 0, left: 16, bottom: 0, right: 0), size: .init(
                 width: 140, height: 140))
         cardUserImageView.layer.cornerRadius = 140 / 2
         cardUserImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
+        messageButton.anchor(
+            top: currentUserImageView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(
+                top: 32, left: 48, bottom: 0, right: 48), size: .init(
+                    width: 0, height: 60))
+
+        swipingButton.anchor(
+            top: messageButton.bottomAnchor, leading: messageButton.leadingAnchor, bottom: nil, trailing: messageButton.trailingAnchor, padding: .init(
+                top: 16, left: 0, bottom: 0, right: 0), size: .init(
+                    width: 0, height: 60))
     }
     var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
