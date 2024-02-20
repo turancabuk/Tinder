@@ -54,6 +54,7 @@ class MatchView: UIView {
         
         setupBlurEffect()
         setupLayout()
+        setupAnimations()
 
     }
     fileprivate func setupLayout() {
@@ -98,6 +99,39 @@ class MatchView: UIView {
             top: messageButton.bottomAnchor, leading: messageButton.leadingAnchor, bottom: nil, trailing: messageButton.trailingAnchor, padding: .init(
                 top: 16, left: 0, bottom: 0, right: 0), size: .init(
                     width: 0, height: 60))
+    }
+    fileprivate func setupAnimations() {
+
+        // ImageViews Moving
+        currentUserImageView.transform = CGAffineTransform(rotationAngle: -(30 * CGFloat.pi / 180)).concatenating(CGAffineTransform(translationX: 200, y: 0))
+        cardUserImageView.transform = CGAffineTransform(rotationAngle: (30 * CGFloat.pi / 180)).concatenating(CGAffineTransform(translationX: -200, y: 0))
+        
+        // Buttons Moving
+        messageButton.transform = CGAffineTransform(translationX: -500, y: 0)
+        swipingButton.transform = CGAffineTransform(translationX: 500, y: 0)
+                
+        UIView.animateKeyframes(withDuration: 1.3, delay: 0, options: .calculationModeCubic, animations: {
+            // ImageViews Animation 1
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.45, animations: {
+                self.currentUserImageView.transform = CGAffineTransform(rotationAngle: -(30 * CGFloat.pi / 180))
+                self.cardUserImageView.transform = CGAffineTransform(rotationAngle: 30 * CGFloat.pi / 180)
+            })
+            
+            // ImageViews back to original positions
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4, animations: {
+                self.currentUserImageView.transform = .identity
+                self.cardUserImageView.transform = .identity
+            })
+            
+            
+        }) { (_) in
+            
+        }
+        // Buttons back to original positions
+        UIView.animate(withDuration: 0.75, delay: 0.6 * 1.3, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            self.messageButton.transform = .identity
+            self.swipingButton.transform = .identity
+        })
     }
     var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
