@@ -29,6 +29,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         setupLayout(topStackView, carDeckView, bottomControls)
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        topStackView.messageButton.addTarget(self, action: #selector(handleMessage), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefreshButton), for: .touchUpInside)
         bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
@@ -69,6 +70,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         overAllStackView.layoutMargins = .init(top: 0, left: 12, bottom: 0, right: 12)
         
         overAllStackView.bringSubviewToFront(carDeckView)
+        navigationController?.navigationBar.isHidden = true
     }
     fileprivate func fetchCurrentUser() {
         
@@ -231,11 +233,14 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     }
     // MARK: Button Confs.
     @objc func handleSettings() {
-        
         let settingsController = SettingsController()
         let navigationController = UINavigationController(rootViewController: settingsController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true, completion: nil)
+    }
+    @objc fileprivate func handleMessage() {
+        let vc = MessageController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(vc, animated: true)
     }
     @objc fileprivate func handleRefreshButton() {
         carDeckView.subviews.forEach({$0.removeFromSuperview()})

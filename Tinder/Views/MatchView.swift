@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 
 class MatchView: UIView {
-    
+        
     var cardUID: String! {
         didSet {
             Firestore.firestore().collection("users").document(cardUID).getDocument { (snapShot, err) in

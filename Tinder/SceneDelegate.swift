@@ -21,9 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let currentUser = Auth.auth().currentUser
         
         if currentUser != nil {
-            window?.rootViewController = HomeController()
+            window?.rootViewController = UINavigationController(rootViewController: HomeController())
         }else{
-            window?.rootViewController = RegistrationController()
+            window?.rootViewController = UINavigationController(rootViewController: RegistrationController())
         }
 //        window?.rootViewController = SwipingPhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         
