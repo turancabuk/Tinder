@@ -69,6 +69,7 @@
 		5CBA60602B7FED7900127118 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBA605F2B7FED7900127118 /* PhotoController.swift */; };
 		5CF3148E2B85E5DA00541309 /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF3148D2B85E5DA00541309 /* MessageController.swift */; };
 		5CF314912B85F08500541309 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 5CF314902B85F08500541309 /* LBTATools */; };
+		5CF314932B861E3900541309 /* MessageCustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF314922B861E3900541309 /* MessageCustomNavBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		5C8844D72B6ABBBF0041B9DA /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 		5CBA605F2B7FED7900127118 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		5CF3148D2B85E5DA00541309 /* MessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
+		5CF314922B861E3900541309 /* MessageCustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCustomNavBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				5C8844D72B6ABBBF0041B9DA /* CustomTextfield.swift */,
+				5CF314922B861E3900541309 /* MessageCustomNavBar.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			files = (
 				5C588FA32B7A1A1200CD7478 /* LoginController.swift in Sources */,
 				5CBA60602B7FED7900127118 /* PhotoController.swift in Sources */,
+				5CF314932B861E3900541309 /* MessageCustomNavBar.swift in Sources */,
 				5C1A654E2B83A84200BD8E4D /* Extension+UIView.swift in Sources */,
 				5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */,
 				5C8844C92B678FB40041B9DA /* CardView.swift in Sources */,
