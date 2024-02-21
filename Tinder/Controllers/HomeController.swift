@@ -239,7 +239,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         present(navigationController, animated: true, completion: nil)
     }
     @objc fileprivate func handleMessage() {
-        let vc = MessageController(collectionViewLayout: UICollectionViewFlowLayout())
+        let vc = MessageController()
         navigationController?.pushViewController(vc, animated: true)
     }
     @objc fileprivate func handleRefreshButton() {
