@@ -37,7 +37,7 @@ class MatchView: UIView {
     }()
     fileprivate let matchLabel: UILabel = {
         let label = UILabel()
-        label.text = "You and X have liked each other"
+        label.text = "You have liked each other"
         label.font = .systemFont(ofSize: 18)
         label.textColor = .white
         label.numberOfLines = 0

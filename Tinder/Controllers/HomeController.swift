@@ -19,6 +19,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     
     var cardViewModels = [CardViewModel]()
     var user: User?
+    var users = [String: User]()
     var lastFetchedUser: User?
     var topCardView: CardView?
     var swipes = [String: Int]()
@@ -104,6 +105,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
             snapshot?.documents.forEach({ (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
+                self.users[user.uid ?? ""] = user
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
                 let hasNotSwipedBefore = self.swipes[user.uid!] != nil
                 if isNotCurrentUser && !hasNotSwipedBefore {
@@ -219,6 +221,24 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
             if hasMatched {
                 print("its Match!!!")
                 self.presentMatchView(cardUID: cardUID)
+                
+                guard let cardUser = self.users[cardUID] else {return}
+                let data = ["name": cardUser.name, "profileImageUrl": cardUser.imageUrl1, "uid": cardUID, "timeStamp": Timestamp(date: Date())]
+                Firestore.firestore().collection("matches_messages").document(uid).collection("matches").document(cardUID).setData(data) { err in
+                    if let err = err {
+                        print("ERROR: ", err)
+                        return
+                    }
+                }
+                
+                guard let currentUser = self.user else {return}
+                let currentUserData = ["name": currentUser.name, "profileImageUrl": currentUser.imageUrl1, "uid": cardUID, "timeStamp": Timestamp(date: Date())]
+                Firestore.firestore().collection("matches_messages").document(cardUID).collection("matches").document(uid).setData(currentUserData) { err in
+                    if let err = err {
+                        print("Error: ", err)
+                        return
+                    }
+                }
             }
         }
     }
