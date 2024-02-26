@@ -36,6 +36,7 @@ class MatchCell: LBTAListCell<Match> {
         profileImageView.constrainWidth(80)
         profileImageView.constrainHeight(80)
         profileImageView.layer.cornerRadius = 80 / 2
+        profileImageView.contentMode = .scaleAspectFill
         userNameLabel.textAlignment = .center
         stack(stack(profileImageView, alignment: .center), userNameLabel)
     }
