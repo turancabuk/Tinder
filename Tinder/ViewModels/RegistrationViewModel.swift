@@ -28,7 +28,6 @@ class RegistrationViewModel {
                 completion(err)
                 return
             }
-            print("Successfully registered user:", res?.user.uid ?? "")
             self.saveImageToFirebase(completion: completion)
         }
     }
@@ -53,7 +52,6 @@ class RegistrationViewModel {
                 }
                 
                 self.bindableIsRegistering.value = false
-                print("Download url of our image is:", url?.absoluteString ?? "")
                 
                 let imageUrl = url?.absoluteString ?? ""
                 self.saveInfoToFirestore(imageUrl: imageUrl, completion: completion)

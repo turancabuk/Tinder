@@ -126,7 +126,6 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
                 print("fetch error: ", err)
                 return
             }
-            print("swipes info", snapshot?.data() ?? "")
             guard let data = snapshot?.data() as? [String: Int] else {return}
             self.swipes = data
         }
@@ -145,7 +144,6 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         return cardView
     }
     func didTapInfoButton(cardViewModel: CardViewModel) {
-        print("Home Controller: ", cardViewModel.attributedString)
         let detailController = DetailController()
         detailController.cardViewModel = cardViewModel
         detailController.modalPresentationStyle = .fullScreen

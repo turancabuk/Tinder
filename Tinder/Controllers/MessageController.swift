@@ -7,31 +7,44 @@
 
 import UIKit
 import LBTATools
+import Firebase
 
-class MatchCell: LBTAListCell<UIColor> {
+struct Match {
+    let name, profileImageUrl: String
     
-    let profilImageView = UIImageView(image: #imageLiteral(resourceName: "fred"), contentMode: .scaleAspectFit)
+    init(dictionary: [String: Any]) {
+        self.name = dictionary["name"] as? String ?? ""
+        self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
+    }
+}
+
+class MatchCell: LBTAListCell<Match> {
+    
+    let profileImageView = UIImageView(image: #imageLiteral(resourceName: "fred"), contentMode: .scaleAspectFit)
     let userNameLabel = UILabel(text: "User Name Here", font: .systemFont(ofSize: 14, weight: .semibold))
     
-    override var item: UIColor! {
+    override var item: Match! {
         didSet {
-            backgroundColor = item
+            userNameLabel.text = item.name
+            profileImageView.sd_setImage(with: URL(string: item.profileImageUrl))
         }
     }
     
     override func setupViews() {
         
-        profilImageView.clipsToBounds = true
-        profilImageView.constrainWidth(80)
-        profilImageView.constrainHeight(85)
-        profilImageView.layer.cornerRadius = 80 / 2
-        stack(stack(profilImageView, alignment: .center), userNameLabel)
+        profileImageView.clipsToBounds = true 
+        profileImageView.constrainWidth(80)
+        profileImageView.constrainHeight(80)
+        profileImageView.layer.cornerRadius = 80 / 2
+        userNameLabel.textAlignment = .center
+        stack(stack(profileImageView, alignment: .center), userNameLabel)
     }
 }
 
-class MessageController: LBTAListController<MatchCell, UIColor>, UICollectionViewDelegateFlowLayout {
+class MessageController: LBTAListController<MatchCell, Match>, UICollectionViewDelegateFlowLayout {
     
     let customNavBar = MessageCustomNavBar()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +54,7 @@ class MessageController: LBTAListController<MatchCell, UIColor>, UICollectionVie
         setupLayout()
         customNavBar.backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
         
-        items = [.clear, .clear, .clear, .clear, .clear]
-        
+        fetchMessages()
     }
     fileprivate func setupLayout() {
         view.addSubview(customNavBar)
@@ -50,6 +62,7 @@ class MessageController: LBTAListController<MatchCell, UIColor>, UICollectionVie
         customNavBar.anchor(
             top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(
                 width: 0, height: 150))
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(
@@ -57,6 +70,25 @@ class MessageController: LBTAListController<MatchCell, UIColor>, UICollectionVie
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: 120, height: 120)
+    }
+    fileprivate func fetchMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        Firestore.firestore().collection("matches_messages").document(uid).collection("matches").getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error: ", err)
+                return
+            }
+            
+            var matches = [Match]()
+            querySnapshot?.documents.forEach({ (documentSnapshot) in
+                let dictionary = documentSnapshot.data()
+                matches.append(.init(dictionary: dictionary))
+            })
+            self.items = matches
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     @objc fileprivate func handleBackButton() {
         navigationController?.popViewController(animated: true)
