@@ -259,6 +259,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     @objc fileprivate func handleMessage() {
         let vc = MessageController()
         navigationController?.pushViewController(vc, animated: true)
+
     }
     @objc fileprivate func handleRefreshButton() {
         carDeckView.subviews.forEach({$0.removeFromSuperview()})
@@ -273,3 +274,4 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         performSwipeAnimation(translation: -700, angle: -15)
     }
 }
+                                
