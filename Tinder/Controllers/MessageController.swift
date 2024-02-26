@@ -58,8 +58,8 @@ class MessageController: LBTAListController<MatchCell, Match>, UICollectionViewD
         fetchMessages()
     }
     fileprivate func setupLayout() {
+        
         view.addSubview(customNavBar)
-
         customNavBar.anchor(
             top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(
                 width: 0, height: 150))
@@ -71,6 +71,11 @@ class MessageController: LBTAListController<MatchCell, Match>, UICollectionViewD
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: 120, height: 120)
+    }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedItem = items[indexPath.item]
+        let chatLogController = ChatLogController(match: selectedItem)
+        navigationController?.pushViewController(chatLogController, animated: true)
     }
     fileprivate func fetchMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
