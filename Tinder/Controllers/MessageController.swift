@@ -63,6 +63,7 @@ class MessageController: LBTAListController<MatchCell, Match>, UICollectionViewD
         customNavBar.anchor(
             top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(
                 width: 0, height: 150))
+        navigationController?.navigationBar.isHidden = true
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -97,6 +98,6 @@ class MessageController: LBTAListController<MatchCell, Match>, UICollectionViewD
         }
     }
     @objc fileprivate func handleBackButton() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }
