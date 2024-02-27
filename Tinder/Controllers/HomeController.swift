@@ -257,8 +257,10 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         present(navigationController, animated: true, completion: nil)
     }
     @objc fileprivate func handleMessage() {
-        let vc = MessageController()
-        navigationController?.pushViewController(vc, animated: true)
+        let messageController = MessageController()
+        let navController = UINavigationController(rootViewController: messageController)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
 
     }
     @objc fileprivate func handleRefreshButton() {
