@@ -223,7 +223,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
                 self.presentMatchView(cardUID: cardUID)
                 
                 guard let cardUser = self.users[cardUID] else {return}
-                let data = ["name": cardUser.name, "profileImageUrl": cardUser.imageUrl1, "uid": cardUID, "timeStamp": Timestamp(date: Date())]
+                let data = ["name": cardUser.name ?? "", "profileImageUrl": cardUser.imageUrl1 ?? "", "uid": cardUID, "timeStamp": Timestamp(date: Date())] as [String: Any]
                 Firestore.firestore().collection("matches_messages").document(uid).collection("matches").document(cardUID).setData(data) { err in
                     if let err = err {
                         print("ERROR: ", err)
@@ -232,11 +232,10 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
                 }
                 
                 guard let currentUser = self.user else {return}
-                let currentUserData = ["name": currentUser.name, "profileImageUrl": currentUser.imageUrl1, "uid": cardUID, "timeStamp": Timestamp(date: Date())]
+                let currentUserData = ["name": currentUser.name ?? "", "profileImageUrl": currentUser.imageUrl1 ?? "", "uid": currentUser.uid ?? "", "timeStamp": Timestamp(date: Date())] as [String: Any]
                 Firestore.firestore().collection("matches_messages").document(cardUID).collection("matches").document(uid).setData(currentUserData) { err in
                     if let err = err {
                         print("Error: ", err)
-                        return
                     }
                 }
             }
