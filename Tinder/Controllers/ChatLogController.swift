@@ -8,60 +8,7 @@
 import LBTATools
 import UIKit
 
-struct Message {
-    let text: String
-    let isFromCurrentUser: Bool
-}
 
-class MessageCell: LBTAListCell<Message> {
-    
-    let textView: UITextView = {
-        let tv = UITextView()
-        tv.backgroundColor = .clear
-        tv.font = .systemFont(ofSize: 20)
-        tv.isScrollEnabled = false
-        tv.isEditable = false
-        return tv
-    }()
-    
-    let bubbleContainer = UIView(backgroundColor: #colorLiteral(red: 0.8980392218, green: 0.8980391622, blue: 0.8980392218, alpha: 1))
-    var anchoredConstraints: AnchoredConstraints!
-    
-    override var item: Message! {
-        didSet {
-            textView.text = item.text
-            
-            if item.isFromCurrentUser {
-                anchoredConstraints.trailing?.isActive = true
-                anchoredConstraints.leading?.isActive = false
-                bubbleContainer.backgroundColor = #colorLiteral(red: 0.1625309587, green: 0.751971662, blue: 0.9782939553, alpha: 1)
-                textView.textColor = .white
-            }else{
-                anchoredConstraints.trailing?.isActive = false
-                anchoredConstraints.leading?.isActive = true
-                bubbleContainer.backgroundColor = #colorLiteral(red: 0.8980392218, green: 0.8980391622, blue: 0.8980392218, alpha: 1)
-                textView.textColor = .black
-            }
-        }
-    }
-    override func setupViews() {
-        super.setupViews()
-         
-        addSubview(bubbleContainer)
-        bubbleContainer.layer.cornerRadius = 12
-        
-        anchoredConstraints = bubbleContainer.anchor(
-            top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
-        anchoredConstraints.leading?.constant = 20
-        anchoredConstraints.trailing?.isActive = false
-        anchoredConstraints.trailing?.constant = -20
-        bubbleContainer.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
-        
-        
-        bubbleContainer.addSubview(textView)
-        textView.fillSuperview(padding: .init(top: 4, left: 12, bottom: 4, right: 12))
-    }
-}
 class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionViewDelegateFlowLayout {
     
     fileprivate lazy var customNavBar = MatchNavBar(match: self.match)
@@ -70,6 +17,59 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
     init(match: Match) {
         self.match = match
         super.init()
+    }
+    
+    class CustomInputAccesorryView: UIView {
+        
+        let textView = UITextView()
+        let sendButton = UIButton(title: "Send", titleColor: .black, font: .boldSystemFont(ofSize: 14), target: nil, action: nil)
+        let placeHolderLabel = UILabel(text: "Enter Message", font: .systemFont(ofSize: 16), textColor: .lightGray)
+        
+        override var intrinsicContentSize: CGSize {
+            return .zero
+        }
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            backgroundColor = .white
+            setupShadow(opacity: 0.1, radius: 8, offset: .init(width: 0, height: 8), color: .lightGray)
+            autoresizingMask = .flexibleHeight
+            
+            textView.isScrollEnabled = false
+            textView.font = .systemFont(ofSize: 16)
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(handleTextChanged), name: UITextView.textDidChangeNotification, object: nil)
+            hstack(textView,
+                   sendButton.withSize(.init(width: 60, height: 60)), alignment: .center).withMargins(.init(top: 0, left: 16, bottom: 0, right: 16))
+            
+            addSubview(placeHolderLabel)
+            placeHolderLabel.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: sendButton.leadingAnchor, padding: .init(
+                top: 0, left: 20, bottom: 0, right: 0))
+            placeHolderLabel.centerYAnchor.constraint(equalTo: sendButton.centerYAnchor).isActive = true
+        }
+        @objc fileprivate func handleTextChanged() {
+            placeHolderLabel.isHidden = textView.text.count != 0
+        }
+        deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    lazy var redView: UIView = {
+        return CustomInputAccesorryView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
+    }()
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            return redView
+        }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
     
     override func viewDidLoad() {
@@ -86,6 +86,7 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         
         setupLayout()
         customNavBar.backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
+        collectionView.keyboardDismissMode = .interactive
         
         
     }
