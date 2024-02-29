@@ -24,6 +24,8 @@
 		5C1F0EBD2B72139C003B716B /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F0EBC2B72139C003B716B /* SettingsCell.swift */; };
 		5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A46DF2B7B55AB00DB0C9C /* DetailController.swift */; };
 		5C3A46E62B7CEB4000DB0C9C /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A46E52B7CEB4000DB0C9C /* SwipingPhotosController.swift */; };
+		5C4B8C252B90FC9F00D3DEE2 /* MatchesHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B8C242B90FC9F00D3DEE2 /* MatchesHorizontalController.swift */; };
+		5C4B8C272B90FCD300D3DEE2 /* MatchesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B8C262B90FCD300D3DEE2 /* MatchesHeaderView.swift */; };
 		5C588F9D2B76269200CD7478 /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C588F9C2B76269200CD7478 /* AgeRangeCell.swift */; };
 		5C588FA32B7A1A1200CD7478 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C588FA22B7A1A1200CD7478 /* LoginController.swift */; };
 		5C588FA82B7A34D800CD7478 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C588FA72B7A34D800CD7478 /* LoginViewModel.swift */; };
@@ -99,6 +101,8 @@
 		5C1F0EBC2B72139C003B716B /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		5C3A46DF2B7B55AB00DB0C9C /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		5C3A46E52B7CEB4000DB0C9C /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
+		5C4B8C242B90FC9F00D3DEE2 /* MatchesHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHorizontalController.swift; sourceTree = "<group>"; };
+		5C4B8C262B90FCD300D3DEE2 /* MatchesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHeaderView.swift; sourceTree = "<group>"; };
 		5C588F9C2B76269200CD7478 /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 		5C588FA22B7A1A1200CD7478 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		5C588FA72B7A34D800CD7478 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 				5C8844C82B678FB40041B9DA /* CardView.swift */,
 				5C1A654F2B83B76D00BD8E4D /* MatchView.swift */,
 				5C1C36BA2B8FB1DB0014E9E2 /* CustomInputAccessoryView.swift */,
+				5C4B8C262B90FCD300D3DEE2 /* MatchesHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				5C588FA22B7A1A1200CD7478 /* LoginController.swift */,
 				5CF3148D2B85E5DA00541309 /* MessageController.swift */,
 				5C93E3372B8CE64A005CEDE5 /* ChatLogController.swift */,
+				5C4B8C242B90FC9F00D3DEE2 /* MatchesHorizontalController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -407,6 +413,7 @@
 				5CBA60602B7FED7900127118 /* PhotoController.swift in Sources */,
 				5CF314932B861E3900541309 /* MessageCustomNavBar.swift in Sources */,
 				5C1A654E2B83A84200BD8E4D /* Extension+UIView.swift in Sources */,
+				5C4B8C272B90FCD300D3DEE2 /* MatchesHeaderView.swift in Sources */,
 				5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */,
 				5C8844C92B678FB40041B9DA /* CardView.swift in Sources */,
 				5C1A65542B84C26200BD8E4D /* GradientButtonBorder.swift in Sources */,
@@ -416,6 +423,7 @@
 				5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */,
 				5C1F0EBD2B72139C003B716B /* SettingsCell.swift in Sources */,
 				5C69CCB32B6BBDFD00D6125B /* RegistrationViewModel.swift in Sources */,
+				5C4B8C252B90FC9F00D3DEE2 /* MatchesHorizontalController.swift in Sources */,
 				5C1C36B92B8F5A130014E9E2 /* MatchCell.swift in Sources */,
 				5C8844C72B66E1B40041B9DA /* TopNavigationStackView.swift in Sources */,
 				5C93E33A2B8D047A005CEDE5 /* MatchNavBar.swift in Sources */,
