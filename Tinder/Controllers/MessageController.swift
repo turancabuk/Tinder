@@ -10,40 +10,6 @@ import LBTATools
 import Firebase
 
 
-struct RecentMessage {
-    let profileImageUrl, name, text, uid: String
-    let timeStamp: Timestamp
-    
-    init(dictionary: [String: Any]) {
-        self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
-        self.name = dictionary["name"] as? String ?? ""
-        self.text = dictionary["text"] as? String ?? ""
-        self.uid = dictionary["uid"] as? String ?? ""
-        self.timeStamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())
-    }
-}
-class RecentMessageCell: LBTAListCell<RecentMessage> {
-    
-    let userProfileImageView = UIImageView(image: #imageLiteral(resourceName: "fred"), contentMode: .scaleAspectFill)
-    let userNameLabel = UILabel(text: "USER NAME", font: .boldSystemFont(ofSize: 18))
-    let messageTextLabel = UILabel(text: "2. Sektörde sarı bayraklar var ve Sebastian Vettel bariyerlerde", font: .systemFont(ofSize: 16), numberOfLines: 2)
-    
-    override var item: RecentMessage!{
-        didSet{
-            userNameLabel.text = item.name
-            messageTextLabel.text = item.text
-            userProfileImageView.sd_setImage(with: URL(string: item.profileImageUrl))
-        }
-    }
-    override func setupViews() {
-        
-        userProfileImageView.layer.cornerRadius = 90 / 2
-        
-        hstack(userProfileImageView.withWidth(90).withHeight(90), stack(userNameLabel, messageTextLabel, spacing: 4), spacing: 20, alignment: .center).padLeft(20).padRight(10)
-        
-        addSeparatorView(leadingAnchor: userNameLabel.leadingAnchor)
-    }
-}
 class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessage, MatchesHeader>, UICollectionViewDelegateFlowLayout {
     
     let customNavBar = MessageCustomNavBar()
@@ -52,14 +18,6 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection = .vertical
-        }
-        items = [
-//            .init(profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/tinder-e1945.appspot.com/o/images%2F994D86B1-0508-4377-9275-3E4E8C05033D?alt=media&token=60c757aa-6262-478e-818b-9e7341d569e6", name: "Christensen", text: "Nerdesin?", uid: "Random", timeStamp: Timestamp(date: Date())),
-//            .init(profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/tinder-e1945.appspot.com/o/images%2FF93669BE-B453-4D6C-88B8-7004A4132217?alt=media&token=1cd0236a-c355-4e17-ae8f-7eaae4a0fa7b", name: "Veronice", text: "Hey Turan!", uid: "Random", timeStamp: Timestamp(date: Date())),
-//            .init(profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/tinder-e1945.appspot.com/o/images%2FF7217604-1047-4B54-9B0F-2062F72CF40B?alt=media&token=96535084-d6bb-4e14-9d26-0fae0b81b327", name: "Kareem", text: "Abi nerdesin?", uid: "Random", timeStamp: Timestamp(date: Date()))
-        ]
         
         setupLayout()
         fetchRecentMessages()
@@ -79,6 +37,10 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
         view.addSubview(statusBarCover)
         statusBarCover.anchor(
             top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
+        
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .vertical
+        }
         
     }
     fileprivate func fetchRecentMessages() {
@@ -109,6 +71,13 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
     func didSelectMatchFromHeader(match: Match) {
         let chatLogController = ChatLogController(match: match)
         navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let recentMessages = self.items[indexPath.item]
+        let dictionary = ["name": recentMessages.name, "uid": recentMessages.uid, "profileImageUrl": recentMessages.profileImageUrl]
+        let match = Match(dictionary: dictionary)
+        let controller = ChatLogController(match: match)
+        navigationController?.pushViewController(controller, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: view.frame.width, height: 410)
