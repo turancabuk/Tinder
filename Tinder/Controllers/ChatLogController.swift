@@ -13,6 +13,7 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
     
     fileprivate lazy var customNavBar = MatchNavBar(match: self.match)
     fileprivate let match: Match
+    var currentUser: User?
     
     init(match: Match) {
         self.match = match
@@ -37,7 +38,8 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-        self.collectionView.keyboardDismissMode = .interactive
+       
+        fetchCurrentUser()
         fetchMessages()
         setupLayout()
 
@@ -56,7 +58,16 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         view.addSubview(statusBarCover)
         statusBarCover.anchor(
             top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
+        
+        self.collectionView.keyboardDismissMode = .interactive
 
+    }
+    fileprivate func fetchCurrentUser() {
+        guard let currentUser = Auth.auth().currentUser?.uid else {return}
+        Firestore.firestore().collection("users").document(currentUser).getDocument { (snapshot, err) in
+            let data = snapshot?.data() ?? [:]
+            self.currentUser = User(dictionary: data)
+        }
     }
     fileprivate func fetchMessages() {
         print("Fetching messages")
@@ -81,6 +92,54 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
             self.collectionView.scrollToItem(at: [0, self.items.count - 1], at: .bottom, animated: true)
         }
     }
+    fileprivate func saveToFromMessages() {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+        let collection = Firestore.firestore().collection("matches_messages").document(currentUserId).collection(match.uid)
+        
+        let data = ["text": customInputView.textView.text ?? "", "fromId": currentUserId, "toId": match.uid, "timeStamp": Timestamp(date: Date())] as [String : Any]
+        
+        collection.addDocument(data: data) { (err) in
+            if let err = err {
+                print("Failed to save message:", err)
+                return
+            }
+            self.customInputView.textView.text = nil
+            self.customInputView.placeHolderLabel.isHidden = false
+        }
+        
+        let toCollection = Firestore.firestore().collection("matches_messages").document(match.uid).collection(currentUserId)
+        toCollection.addDocument(data: data) { (err) in
+            if let err = err {
+                print("Failed to save message:", err)
+                return
+            }
+            self.customInputView.textView.text = nil
+            self.customInputView.placeHolderLabel.isHidden = false
+        }
+    }
+    fileprivate func saveToFromRecentMessages() {
+        guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+        
+        
+        let data = ["text": customInputView.textView.text ?? "", "name": match.name,
+                    "profileImageUrl": match.profileImageUrl, "timeStamp": Timestamp(date: Date()),
+                    "uid": match.uid] as [String : Any]
+        
+        
+        Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages").document(match.uid).setData(data) { (err) in
+            
+            if let err = err {
+                print("Failed to save recent message:", err)
+                return
+            }
+        }
+        
+        // save the other direction
+        guard let currentUser = self.currentUser else { return }
+        let toData = ["text": customInputView.textView.text ?? "", "name": currentUser.name ?? "","profileImageUrl": currentUser.imageUrl1 ?? "","timeStamp": Timestamp(date: Date()), "uid": currentUserId] as [String : Any]
+        
+        Firestore.firestore().collection("matches_messages").document(match.uid).collection("recent_messages").document(currentUserId).setData(toData)
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
       
         // Estimated Size for dynamic Cells
@@ -96,37 +155,9 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         return .init(top: 160, left: 0, bottom: 0, right: 0)
     }
     @objc fileprivate func handleSend() {
-        print(customInputView.textView.text ?? "")
-       
-        guard let currentUserId = Auth.auth().currentUser?.uid else { return }
-        let collection = Firestore.firestore().collection("matches_messages").document(currentUserId).collection(match.uid)
-        
-        let data = ["text": customInputView.textView.text ?? "", "fromId": currentUserId, "toId": match.uid,
-                    "timeStamp": Timestamp(date: Date())] as [String : Any]
-        
-        collection.addDocument(data: data) { (err) in
-            if let err = err {
-                print("Failed to save message:", err)
-                return
-            }
-            
-            print("Successfully saved msg into Firestore")
-            self.customInputView.textView.text = nil
-            self.customInputView.placeHolderLabel.isHidden = false
-        }
-        
-        let toCollection = Firestore.firestore().collection("matches_messages").document(match.uid).collection(currentUserId)
-        
-        toCollection.addDocument(data: data) { (err) in
-            if let err = err {
-                print("Failed to save message:", err)
-                return
-            }
-            
-            print("Successfully saved msg into Firestore")
-            self.customInputView.textView.text = nil
-            self.customInputView.placeHolderLabel.isHidden = false
-        }
+
+        saveToFromMessages()
+        saveToFromRecentMessages()
     }
     @objc fileprivate func handleBackButton() {
         navigationController?.popViewController(animated: true)

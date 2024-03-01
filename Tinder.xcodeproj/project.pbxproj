@@ -22,6 +22,7 @@
 		5C1C36BB2B8FB1DB0014E9E2 /* CustomInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1C36BA2B8FB1DB0014E9E2 /* CustomInputAccessoryView.swift */; };
 		5C1F0EBA2B70FB4C003B716B /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F0EB92B70FB4C003B716B /* SettingsController.swift */; };
 		5C1F0EBD2B72139C003B716B /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1F0EBC2B72139C003B716B /* SettingsCell.swift */; };
+		5C37D97F2B92625A00A7132E /* RecentMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C37D97E2B92625A00A7132E /* RecentMessageCell.swift */; };
 		5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A46DF2B7B55AB00DB0C9C /* DetailController.swift */; };
 		5C3A46E62B7CEB4000DB0C9C /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A46E52B7CEB4000DB0C9C /* SwipingPhotosController.swift */; };
 		5C4B8C252B90FC9F00D3DEE2 /* MatchesHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B8C242B90FC9F00D3DEE2 /* MatchesHorizontalController.swift */; };
@@ -75,6 +76,7 @@
 		5C93E33A2B8D047A005CEDE5 /* MatchNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C93E3392B8D047A005CEDE5 /* MatchNavBar.swift */; };
 		5C93E33C2B8F45AF005CEDE5 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C93E33B2B8F45AF005CEDE5 /* Message.swift */; };
 		5C93E33E2B8F4602005CEDE5 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C93E33D2B8F4602005CEDE5 /* MessageCell.swift */; };
+		5CB5A7FC2B91E72C00EF8B35 /* RecentMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB5A7FB2B91E72C00EF8B35 /* RecentMessage.swift */; };
 		5CBA60602B7FED7900127118 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBA605F2B7FED7900127118 /* PhotoController.swift */; };
 		5CF3148E2B85E5DA00541309 /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF3148D2B85E5DA00541309 /* MessageController.swift */; };
 		5CF314912B85F08500541309 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 5CF314902B85F08500541309 /* LBTATools */; };
@@ -99,6 +101,7 @@
 		5C1C36BA2B8FB1DB0014E9E2 /* CustomInputAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputAccessoryView.swift; sourceTree = "<group>"; };
 		5C1F0EB92B70FB4C003B716B /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		5C1F0EBC2B72139C003B716B /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		5C37D97E2B92625A00A7132E /* RecentMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessageCell.swift; sourceTree = "<group>"; };
 		5C3A46DF2B7B55AB00DB0C9C /* DetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		5C3A46E52B7CEB4000DB0C9C /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		5C4B8C242B90FC9F00D3DEE2 /* MatchesHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHorizontalController.swift; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 		5C93E3392B8D047A005CEDE5 /* MatchNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchNavBar.swift; sourceTree = "<group>"; };
 		5C93E33B2B8F45AF005CEDE5 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		5C93E33D2B8F4602005CEDE5 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		5CB5A7FB2B91E72C00EF8B35 /* RecentMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessage.swift; sourceTree = "<group>"; };
 		5CBA605F2B7FED7900127118 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		5CF3148D2B85E5DA00541309 /* MessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
 		5CF314922B861E3900541309 /* MessageCustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCustomNavBar.swift; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 				5C588F9C2B76269200CD7478 /* AgeRangeCell.swift */,
 				5C93E33D2B8F4602005CEDE5 /* MessageCell.swift */,
 				5C1C36B82B8F5A130014E9E2 /* MatchCell.swift */,
+				5C37D97E2B92625A00A7132E /* RecentMessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 				5C69CCF02B6CCCCF00D6125B /* Bindable.swift */,
 				5C93E33B2B8F45AF005CEDE5 /* Message.swift */,
 				5C1C36B62B8F59EB0014E9E2 /* Match.swift */,
+				5CB5A7FB2B91E72C00EF8B35 /* RecentMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -415,6 +421,7 @@
 				5C1A654E2B83A84200BD8E4D /* Extension+UIView.swift in Sources */,
 				5C4B8C272B90FCD300D3DEE2 /* MatchesHeaderView.swift in Sources */,
 				5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */,
+				5C37D97F2B92625A00A7132E /* RecentMessageCell.swift in Sources */,
 				5C8844C92B678FB40041B9DA /* CardView.swift in Sources */,
 				5C1A65542B84C26200BD8E4D /* GradientButtonBorder.swift in Sources */,
 				5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */,
@@ -431,6 +438,7 @@
 				5C588FA82B7A34D800CD7478 /* LoginViewModel.swift in Sources */,
 				5C1B0DB72B6524810094915B /* HomeController.swift in Sources */,
 				5C93E33E2B8F4602005CEDE5 /* MessageCell.swift in Sources */,
+				5CB5A7FC2B91E72C00EF8B35 /* RecentMessage.swift in Sources */,
 				5C8844D22B67D9860041B9DA /* CardViewModel.swift in Sources */,
 				5C588F9D2B76269200CD7478 /* AgeRangeCell.swift in Sources */,
 				5C1F0EBA2B70FB4C003B716B /* SettingsController.swift in Sources */,
