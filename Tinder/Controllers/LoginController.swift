@@ -61,7 +61,9 @@ class LoginController: UIViewController {
     fileprivate let loginViewModel = LoginViewModel()
     let hud = JGProgressHUD(style: .dark)
     
-    
+    deinit {
+        print("Deinit Called")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         

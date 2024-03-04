@@ -14,6 +14,7 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
     fileprivate lazy var customNavBar = MatchNavBar(match: self.match)
     fileprivate let match: Match
     var currentUser: User?
+    var listener: ListenerRegistration?
     
     init(match: Match) {
         self.match = match
@@ -34,6 +35,10 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         return true
     }
     
+    deinit {
+        print("Memory being reclaimed properly CHATLOG")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +50,13 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
 
 
         
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isMovingFromParent {
+            listener?.remove()
+        }
     }
     fileprivate func setupLayout() {
         view.addSubview(customNavBar)
@@ -68,6 +80,7 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
             let data = snapshot?.data() ?? [:]
             self.currentUser = User(dictionary: data)
         }
+        
     }
     fileprivate func fetchMessages() {
         print("Fetching messages")
@@ -76,7 +89,7 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
         
         let query = Firestore.firestore().collection("matches_messages").document(currentUserId).collection(match.uid).order(by: "timeStamp")
         
-        query.addSnapshotListener { (querySnapshot, err) in
+            listener = query.addSnapshotListener { (querySnapshot, err) in
             if let err = err {
                 print("Failed to fetch messages:", err)
                 return
@@ -90,6 +103,7 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
             })
             self.collectionView.reloadData()
             self.collectionView.scrollToItem(at: [0, self.items.count - 1], at: .bottom, animated: true)
+            print("Nowwwww")
         }
     }
     fileprivate func saveToFromMessages() {

@@ -12,9 +12,15 @@ import Firebase
 
 class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessage, MatchesHeader>, UICollectionViewDelegateFlowLayout {
     
+    
     let customNavBar = MessageCustomNavBar()
     var recentMessagesDictionary = [String: RecentMessage]()
+    var listener: ListenerRegistration?
 
+    deinit {
+        print("Memory being reclaimed properly MESSAGECONTROLLER")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +29,13 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
         fetchRecentMessages()
         customNavBar.backButton.addTarget(self, action: #selector(handleBackButton), for: .touchUpInside)
         
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
+        if isMovingToParent {
+            listener?.remove()
+        }
     }
     fileprivate func setupLayout() {
         
@@ -45,8 +57,8 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
     }
     fileprivate func fetchRecentMessages() {
         guard let currentUserId = Auth.auth().currentUser?.uid else {return}
-        Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages").addSnapshotListener { (querySnapshot, err) in
-            
+        let query = Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages")
+        listener = query.addSnapshotListener { (querySnapshot, err) in
             querySnapshot?.documentChanges.forEach({ (change) in
                 if change.type == .added || change.type == .modified {
                     let dictionary = change.document.data()
@@ -58,7 +70,7 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
         }
     }
     fileprivate func resetItems() {
-        var values = Array(recentMessagesDictionary.values)
+        let values = Array(recentMessagesDictionary.values)
         items = values.sorted(by: {(recentMessage1, recentMessage2) -> Bool in
             return recentMessage1.timeStamp.compare(recentMessage2.timeStamp) == .orderedDescending
         })
@@ -93,6 +105,6 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
         return 0
     }
     @objc fileprivate func handleBackButton() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }

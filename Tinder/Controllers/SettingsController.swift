@@ -61,6 +61,9 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     }()
     var user: User?
     
+    deinit {
+        print("Memory being reclaimed properly***")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
