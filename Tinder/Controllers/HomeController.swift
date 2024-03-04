@@ -23,6 +23,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     var lastFetchedUser: User?
     var topCardView: CardView?
     var swipes = [String: Int]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,14 +77,14 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     fileprivate func fetchCurrentUser() {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+        let getDocument = Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
             if let err = err {
                 print(err)
                 return
             }
             guard let dictionary = snapshot?.data() else { return }
             self.user = User(dictionary: dictionary)
-        }
+        } 
     }
     func didFinishLoggingIn() {
         fetchCurrentUser()
@@ -257,10 +258,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     }
     @objc fileprivate func handleMessage() {
         let messageController = MessageController()
-        let navController = UINavigationController(rootViewController: messageController)
-        navController.modalPresentationStyle = .fullScreen
-        present(navController, animated: true)
-
+        navigationController?.pushViewController(messageController, animated: true)
     }
     @objc fileprivate func handleRefreshButton() {
         carDeckView.subviews.forEach({$0.removeFromSuperview()})

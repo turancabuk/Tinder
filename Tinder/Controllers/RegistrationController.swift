@@ -83,7 +83,9 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
     lazy var layoutStackView = UIStackView(arrangedSubviews: [
         selectPhotoButton, fullNameTextfield, emailTextfield, passwordTextfield, registerButton])
     
-    
+    deinit {
+        print("Deinit Called")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
