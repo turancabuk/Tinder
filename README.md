@@ -31,7 +31,7 @@ Bu proje kapsamında aşağıdaki Swift özelliklerini kullanarak geliştirme ya
 <br/>**Swift AutoLayout**
 <br/>**Dependency Injection**
 
-![tinderrr](https://github.com/turancabuk/Tinder/assets/98350672/eb95e847-c775-4eb6-a2b2-55e8e4a24a60)
+![Tinderrr](https://example.com/image.gif){:width="100px" height="100px"}
 
 
 This project is an app clone based on the Tinder social media app. During this study period, I took my iOS development skills to the highest level by using the advanced features of the Swift programming language.
