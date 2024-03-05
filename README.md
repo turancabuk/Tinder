@@ -19,22 +19,33 @@ Register ekranındaki seçtiği profil fotoğrafını değiştirmek, yeni fotola
 Bu proje kapsamında aşağıdaki Swift özelliklerini kullanarak geliştirme yaptım:
 
 <br/>**UIKit**
-<br/>**Firebase & Firestore Database**
+<br/>**ProgramaticUI**
 <br/>**MVVM Architecture**
 <br/>**Swift Bindable**
-<br/>**Swift UI PanGesture Recognizer**
-<br/>**Resolving Retain Cycles**
+<br/>**Firebase & Firestore Database**
+<br/>**Swift UI PanGesture Recognizer Animations**
 <br/>**Swift keyframe animation**
-<br/>**Swift Reactive Programing**
-<br/>**ProgramaticUI**
-<br/>**Swift AutoLayout**
+<br/>**Resolving Retain Cycles**
 <br/>**Pagination Data Fetch**
+<br/>**Swift Reactive Programing**
+<br/>**Swift AutoLayout**
 <br/>**Dependency Injection**
 
-This project is a replica of Apple's App Store, developed as a mobile application store clone. Throughout this process, I enhanced my iOS development skills by utilizing advanced features of the Swift programming language.
+![tinderrr](https://github.com/turancabuk/Tinder/assets/98350672/eb95e847-c775-4eb6-a2b2-55e8e4a24a60)
 
-Using API endpoints obtained from "https://rss.applemarketingtools.com", the application categorizes apps similarly to the App Store, organizing them within the Today, Search, Apps, and Musics tabs to provide users with a categorized and easily accessible list.
 
-This endeavor aims to push my iOS app development skills to the forefront and leverage the latest features offered by Swift. You can explore this repository to understand and implement features that you can use in your own projects.
+This project is an app clone based on the Tinder social media app. During this study period, I took my iOS development skills to the highest level by using the advanced features of the Swift programming language.
 
-In this project I implemented the above Swift features.
+When the application is run, on the Register screen shown to the user, I ask the user to specify a profile photo, user name, e-mail address and password, allowing the user to switch to the HomeController screen.
+If the user has been registered before and wants to log in to the application again, I am directed to the Login screen and the user can log in to the HomeController screen with only his e-mail address and password.
+
+
+In order to provide a real Tinder application simulation to the user who comes to the HomeController screen, I pull the contact cards I previously created in the Firestore Database from Firebase and show them to the user.
+Just like in the Tinder application, the user can throw the card of the person he wants to match with to the right, and the cards of the person he does not want to match to the left. A chat bubble opens with the person the user drags to the right and matches with the person they matched with in the message box.
+I separate the chats that have started and those that have not started by showing the user a new list of the chats that he started/ongoing with the person he matched with and selected from the chat bubble.
+
+
+I created a profile page like in the Tinder application for the user who wants to change the profile photo he/she has selected on the Register screen and add new photos. Here, I allowed the user to enter his/her age information and occupation information and stored it in the Firestora Database so that the information is not lost in subsequent logins.
+
+
+Within the scope of this project, I developed using the above Swift features.
