@@ -22,7 +22,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     class CustomImagePickerController: UIImagePickerController {
         var imageButton: UIButton?
     }
-    
     lazy var buttonImage1 = createButton(selector: #selector(handleSelectPhoto))
     lazy var buttonImage2 = createButton(selector: #selector(handleSelectPhoto))
     lazy var buttonImage3 = createButton(selector: #selector(handleSelectPhoto))
@@ -34,7 +33,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         button.imageView?.contentMode = .scaleAspectFill
         return button
     }
-    
     lazy var header: UIView = {
         let header = UIView()
         header.addSubview(buttonImage1)
@@ -64,7 +62,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     deinit {
         print("Memory being reclaimed properly***")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -149,7 +146,6 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         }
         return headerLabel
     }
-
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 300

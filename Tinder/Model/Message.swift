@@ -11,7 +11,6 @@ struct Message {
     let text, fromId, toId: String
     let timeStmap: Timestamp
     let isFromCurrentUser: Bool
-
     
     init(dictionary: [String: Any]) {
         self.text = dictionary["text"] as? String ?? ""

@@ -124,12 +124,12 @@ class DetailController: UIViewController, UIScrollViewDelegate {
         self.dismiss(animated: true)
     }
     @objc  func handleDisLike() {
-        print("***hello***")
+       
     }
     @objc  func handleSuperLike() {
-        print("***hello1***")
+        
     }
     @objc  func handleLike() {
-        print("***hello2***")
+       
     }
 }

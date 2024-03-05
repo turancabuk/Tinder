@@ -59,7 +59,6 @@ class RegistrationViewModel {
             
         })
     }
-    
     fileprivate func saveInfoToFirestore(imageUrl: String, completion: @escaping (Error?) -> ()) {
         let uid = Auth.auth().currentUser?.uid ?? ""
         let docData = ["fullName": fullName ?? "", "uid": uid, "imageUrl1": imageUrl]
@@ -77,6 +76,5 @@ class RegistrationViewModel {
         let formValidity = fullName?.isEmpty == false && email?.isEmpty == false && password?.isEmpty == false
         bindableIsFormValid.value = formValidity
     }
-    
     var bindableIsFormValid = Bindable<Bool>()
 }

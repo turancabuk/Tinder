@@ -33,7 +33,6 @@ class CardView: UIView {
             setupImageIndexObserver()
         }
     }
-    
     // encapsulation
     fileprivate let imageView = UIImageView()
     fileprivate let informationLabel = UILabel()

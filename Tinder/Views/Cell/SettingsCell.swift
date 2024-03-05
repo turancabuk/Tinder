@@ -14,15 +14,12 @@ class SettingsCell: UITableViewCell {
         override func textRect(forBounds bounds: CGRect) -> CGRect {
             return bounds.insetBy(dx: 24, dy: 0)
         }
-        
         override func editingRect(forBounds bounds: CGRect) -> CGRect {
             return bounds.insetBy(dx: 24, dy: 0)
         }
-        
         override var intrinsicContentSize: CGSize {
             return CGSize(width: UIView.noIntrinsicMetric, height: 44)
         }
-
     }
     
     let textField: UITextField = {
@@ -41,5 +38,4 @@ class SettingsCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
-
 }

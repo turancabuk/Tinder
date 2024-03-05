@@ -52,7 +52,6 @@ class MessageCell: LBTAListCell<Message> {
         anchoredConstraints.trailing?.constant = -20
         bubbleContainer.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
         
-        
         bubbleContainer.addSubview(textView)
         textView.fillSuperview(padding: .init(top: 4, left: 12, bottom: 4, right: 12))
     }

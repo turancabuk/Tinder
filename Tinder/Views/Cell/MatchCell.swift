@@ -19,7 +19,6 @@ class MatchCell: LBTAListCell<Match> {
             profileImageView.sd_setImage(with: URL(string: item.profileImageUrl))
         }
     }
-    
     override func setupViews() {
         
         profileImageView.clipsToBounds = true

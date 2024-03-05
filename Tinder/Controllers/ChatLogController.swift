@@ -103,7 +103,6 @@ class ChatLogController: LBTAListController<MessageCell, Message>, UICollectionV
             })
             self.collectionView.reloadData()
             self.collectionView.scrollToItem(at: [0, self.items.count - 1], at: .bottom, animated: true)
-            print("Nowwwww")
         }
     }
     fileprivate func saveToFromMessages() {

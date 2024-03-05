@@ -19,7 +19,6 @@ class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSou
             setViewControllers([controllers.first!], direction: .forward, animated: false)
         }
     }
-    
     var controllers = [UIViewController]()
     fileprivate let barStackView = UIStackView(arrangedSubviews: [])
     
@@ -54,7 +53,6 @@ class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSou
         if index == controllers.count - 1 { return nil }
         return controllers[index + 1]
     }
-    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let index = self.controllers.firstIndex(where: {$0 == viewController}) ?? 0
         if index == 0 { return nil }

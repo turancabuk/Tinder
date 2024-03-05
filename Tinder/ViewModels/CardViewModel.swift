@@ -10,7 +10,6 @@ import UIKit
 protocol ProducesCardViewModel {
     func toCardViewModel() -> CardViewModel
 }
-
 class CardViewModel {
 
     let uid: String
@@ -24,14 +23,12 @@ class CardViewModel {
         self.attributedString = attributedString
         self.textAlignment = textAlignment
     }
-    
     fileprivate var imageIndex = 0 {
         didSet {
             let imageUrl = imageNames[imageIndex]
             imageIndexObserver?(imageIndex, imageUrl)
         }
     }
-    
     var imageIndexObserver: ((Int, String?) -> ())?
     
     func advanceToNextPhoto() {

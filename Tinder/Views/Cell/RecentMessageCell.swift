@@ -27,7 +27,6 @@ class RecentMessageCell: LBTAListCell<RecentMessage> {
         userProfileImageView.layer.cornerRadius = 90 / 2
         
         hstack(userProfileImageView.withWidth(90).withHeight(90), stack(userNameLabel, messageTextLabel, spacing: 4), spacing: 20, alignment: .center).padLeft(20).padRight(10)
-        
         addSeparatorView(leadingAnchor: userNameLabel.leadingAnchor)
     }
 }

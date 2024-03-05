@@ -83,9 +83,7 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
     lazy var layoutStackView = UIStackView(arrangedSubviews: [
         selectPhotoButton, fullNameTextfield, emailTextfield, passwordTextfield, registerButton])
     
-    deinit {
-        print("Deinit Called")
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,7 +94,6 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
         setupRegistrationViewModelObserver()
         
     }
-    
     // MARK: Layout Confs.
     fileprivate func setupLayout() {
         
@@ -124,7 +121,6 @@ class RegistrationController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     // MARK: Keyboard Confs:
-    
     fileprivate func setupNotificationObservers() {
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)

@@ -105,6 +105,6 @@ class MessageController: LBTAListHeaderController<RecentMessageCell, RecentMessa
         return 0
     }
     @objc fileprivate func handleBackButton() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }

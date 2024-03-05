@@ -12,7 +12,6 @@ import JGProgressHUD
 
 class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegate {
     
-    
     let topStackView = TopNavigationStackView()
     let carDeckView = UIView()
     let bottomControls = HomeBottomControlsStackView()
@@ -23,7 +22,6 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     var lastFetchedUser: User?
     var topCardView: CardView?
     var swipes = [String: Int]()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +82,7 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
             }
             guard let dictionary = snapshot?.data() else { return }
             self.user = User(dictionary: dictionary)
-        } 
+        }
     }
     func didFinishLoggingIn() {
         fetchCurrentUser()
@@ -258,7 +256,9 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
     }
     @objc fileprivate func handleMessage() {
         let messageController = MessageController()
-        navigationController?.pushViewController(messageController, animated: true)
+        let navController = UINavigationController(rootViewController: messageController)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
     }
     @objc fileprivate func handleRefreshButton() {
         carDeckView.subviews.forEach({$0.removeFromSuperview()})
@@ -273,4 +273,4 @@ class HomeController: UIViewController, LoginControllerDelegate, CardViewDelegat
         performSwipeAnimation(translation: -700, angle: -15)
     }
 }
-                                
+

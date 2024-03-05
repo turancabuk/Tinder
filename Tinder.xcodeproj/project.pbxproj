@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C1A654E2B83A84200BD8E4D /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A654D2B83A84200BD8E4D /* Extension+UIView.swift */; };
+		5C1A654E2B83A84200BD8E4D /* Firebase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A654D2B83A84200BD8E4D /* Firebase+Utils.swift */; };
 		5C1A65502B83B76D00BD8E4D /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A654F2B83B76D00BD8E4D /* MatchView.swift */; };
 		5C1A65522B84BF5200BD8E4D /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A65512B84BF5200BD8E4D /* GradientButton.swift */; };
 		5C1A65542B84C26200BD8E4D /* GradientButtonBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1A65532B84C26200BD8E4D /* GradientButtonBorder.swift */; };
@@ -27,7 +27,6 @@
 		5C3A46E62B7CEB4000DB0C9C /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A46E52B7CEB4000DB0C9C /* SwipingPhotosController.swift */; };
 		5C4B8C252B90FC9F00D3DEE2 /* MatchesHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B8C242B90FC9F00D3DEE2 /* MatchesHorizontalController.swift */; };
 		5C4B8C272B90FCD300D3DEE2 /* MatchesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B8C262B90FCD300D3DEE2 /* MatchesHeaderView.swift */; };
-		5C588F9D2B76269200CD7478 /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C588F9C2B76269200CD7478 /* AgeRangeCell.swift */; };
 		5C588FA32B7A1A1200CD7478 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C588FA22B7A1A1200CD7478 /* LoginController.swift */; };
 		5C588FA82B7A34D800CD7478 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C588FA72B7A34D800CD7478 /* LoginViewModel.swift */; };
 		5C69CCB32B6BBDFD00D6125B /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C69CCB22B6BBDFD00D6125B /* RegistrationViewModel.swift */; };
@@ -69,7 +68,6 @@
 		5C8844CC2B67B4AB0041B9DA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844CB2B67B4AB0041B9DA /* User.swift */; };
 		5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844CD2B67C5640041B9DA /* VerticalStackView.swift */; };
 		5C8844D22B67D9860041B9DA /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D12B67D9860041B9DA /* CardViewModel.swift */; };
-		5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D32B68D8E90041B9DA /* Advertiser.swift */; };
 		5C8844D62B6A4E270041B9DA /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D52B6A4E270041B9DA /* RegistrationController.swift */; };
 		5C8844D82B6ABBBF0041B9DA /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8844D72B6ABBBF0041B9DA /* CustomTextfield.swift */; };
 		5C93E3382B8CE64A005CEDE5 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C93E3372B8CE64A005CEDE5 /* ChatLogController.swift */; };
@@ -84,7 +82,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5C1A654D2B83A84200BD8E4D /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		5C1A654D2B83A84200BD8E4D /* Firebase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Utils.swift"; sourceTree = "<group>"; };
 		5C1A654F2B83B76D00BD8E4D /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		5C1A65512B84BF5200BD8E4D /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		5C1A65532B84C26200BD8E4D /* GradientButtonBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButtonBorder.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 		5C3A46E52B7CEB4000DB0C9C /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		5C4B8C242B90FC9F00D3DEE2 /* MatchesHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHorizontalController.swift; sourceTree = "<group>"; };
 		5C4B8C262B90FCD300D3DEE2 /* MatchesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHeaderView.swift; sourceTree = "<group>"; };
-		5C588F9C2B76269200CD7478 /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 		5C588FA22B7A1A1200CD7478 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		5C588FA72B7A34D800CD7478 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		5C69CCB22B6BBDFD00D6125B /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -118,7 +115,6 @@
 		5C8844CB2B67B4AB0041B9DA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C8844CD2B67C5640041B9DA /* VerticalStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 		5C8844D12B67D9860041B9DA /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
-		5C8844D32B68D8E90041B9DA /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		5C8844D52B6A4E270041B9DA /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		5C8844D72B6ABBBF0041B9DA /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 		5C93E3372B8CE64A005CEDE5 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
@@ -213,7 +209,6 @@
 			isa = PBXGroup;
 			children = (
 				5C1F0EBC2B72139C003B716B /* SettingsCell.swift */,
-				5C588F9C2B76269200CD7478 /* AgeRangeCell.swift */,
 				5C93E33D2B8F4602005CEDE5 /* MessageCell.swift */,
 				5C1C36B82B8F5A130014E9E2 /* MatchCell.swift */,
 				5C37D97E2B92625A00A7132E /* RecentMessageCell.swift */,
@@ -245,7 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				5C8844CD2B67C5640041B9DA /* VerticalStackView.swift */,
-				5C1A654D2B83A84200BD8E4D /* Extension+UIView.swift */,
+				5C1A654D2B83A84200BD8E4D /* Firebase+Utils.swift */,
 				5C1A65512B84BF5200BD8E4D /* GradientButton.swift */,
 				5C1A65532B84C26200BD8E4D /* GradientButtonBorder.swift */,
 			);
@@ -270,7 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				5C8844CB2B67B4AB0041B9DA /* User.swift */,
-				5C8844D32B68D8E90041B9DA /* Advertiser.swift */,
 				5C69CCF02B6CCCCF00D6125B /* Bindable.swift */,
 				5C93E33B2B8F45AF005CEDE5 /* Message.swift */,
 				5C1C36B62B8F59EB0014E9E2 /* Match.swift */,
@@ -418,7 +412,7 @@
 				5C588FA32B7A1A1200CD7478 /* LoginController.swift in Sources */,
 				5CBA60602B7FED7900127118 /* PhotoController.swift in Sources */,
 				5CF314932B861E3900541309 /* MessageCustomNavBar.swift in Sources */,
-				5C1A654E2B83A84200BD8E4D /* Extension+UIView.swift in Sources */,
+				5C1A654E2B83A84200BD8E4D /* Firebase+Utils.swift in Sources */,
 				5C4B8C272B90FCD300D3DEE2 /* MatchesHeaderView.swift in Sources */,
 				5C3A46E02B7B55AB00DB0C9C /* DetailController.swift in Sources */,
 				5C37D97F2B92625A00A7132E /* RecentMessageCell.swift in Sources */,
@@ -427,7 +421,6 @@
 				5C8844CE2B67C5640041B9DA /* VerticalStackView.swift in Sources */,
 				5C1C36B72B8F59EB0014E9E2 /* Match.swift in Sources */,
 				5C1A65502B83B76D00BD8E4D /* MatchView.swift in Sources */,
-				5C8844D42B68D8E90041B9DA /* Advertiser.swift in Sources */,
 				5C1F0EBD2B72139C003B716B /* SettingsCell.swift in Sources */,
 				5C69CCB32B6BBDFD00D6125B /* RegistrationViewModel.swift in Sources */,
 				5C4B8C252B90FC9F00D3DEE2 /* MatchesHorizontalController.swift in Sources */,
@@ -440,7 +433,6 @@
 				5C93E33E2B8F4602005CEDE5 /* MessageCell.swift in Sources */,
 				5CB5A7FC2B91E72C00EF8B35 /* RecentMessage.swift in Sources */,
 				5C8844D22B67D9860041B9DA /* CardViewModel.swift in Sources */,
-				5C588F9D2B76269200CD7478 /* AgeRangeCell.swift in Sources */,
 				5C1F0EBA2B70FB4C003B716B /* SettingsController.swift in Sources */,
 				5C93E33C2B8F45AF005CEDE5 /* Message.swift in Sources */,
 				5C1B0DB32B6524810094915B /* AppDelegate.swift in Sources */,
