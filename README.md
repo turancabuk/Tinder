@@ -31,8 +31,11 @@ Bu proje kapsamında aşağıdaki Swift özelliklerini kullanarak geliştirme ya
 <br/>**Swift AutoLayout**
 <br/>**Dependency Injection**
 
+<img width="200" alt="![tinderrr]" src="https://github.com/turancabuk/Tinder/assets/98350672/eb95e847-c775-4eb6-a2b2-55e8e4a24a60">
+<img width="200" alt="![ekran resmi]" src="https://github.com/turancabuk/Tinder/assets/98350672/ac71b35f-faff-4188-9469-f96935262d55">
+<img width="200" alt="![ekran resmi1]" src="https://github.com/turancabuk/Tinder/assets/98350672/79acee69-9bba-4bf0-9a43-8dc95fe8a281">
+<img width="200" alt="![ekran resmi2]" src="https://github.com/turancabuk/Tinder/assets/98350672/eb113f78-683d-4d8a-a73a-aa2534c27b0f">
 
-![tinderrr](https://github.com/turancabuk/Tinder/assets/98350672/eb95e847-c775-4eb6-a2b2-55e8e4a24a60 =250x)
 
 
 
