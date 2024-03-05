@@ -9,22 +9,27 @@ Kullanıcı daha önce Register olmuşsa ve tekrar uygulamaya giriş yapmak isti
 
 
 HomeController ekranına gelen kullanıcıya gerçek bir Tinder uygulaması simülasyonu yaşatmak için Firestore Database'de daha önce oluşturduğum kişi kartlarını Firebase'den çekerek kullanıcıya gösteriyorum.
-Kullanıcı, Tinder uygulamasında olduğu gibi eşleşmek istediği kişi kartını sağa, istemediği kişi kartlarını sola atabiliyor. sağa attığı kişi kartları ile karşılıklı eşleşen kullanıcının messaj kutusunda sağa sürüklediği ve karşılıklı eşleştiği kişi ile sohbet balonu açılıyor.
+Kullanıcı, Tinder uygulamasında olduğu gibi eşleşmek istediği kişi kartını sağa, istemediği kişi kartlarını sola atabiliyor. sağa attığı kişi kartları ile karşılıklı eşleşen kullanıcının mesaj kutusunda sağa sürüklediği ve karşılıklı eşleştiği kişi ile sohbet balonu açılıyor.
 Kullanıcıya, eşleştiği ve oluşan sohbet balonundan seçtiği kişi ile başlattığı/devam eden sohbetleri yeni bir liste ile göstererek, başlamış ve başlamamış sohbetleri ayırıyorum.
 
 
 Register ekranındaki seçtiği profil fotoğrafını değiştirmek, yeni fotolar eklemek isteyen kullanıcı için Tinder uygulamasındaki gibi bir profil sayfası oluşturdum ve burada kullanıcının yaş bilgilerini, meslek bilgilerini girmesini sağlayarak sonraki girişlerinde bilgilerinin kaybolmaması için Firestora Database'de sakladım.
 
 
-<br/>**UIKit & SwiftUI**
+Bu proje kapsamında aşağıdaki Swift özelliklerini kullanarak geliştirme yaptım:
+
+<br/>**UIKit**
+<br/>**Firebase & Firestore Database**
+<br/>**MVVM Architecture**
+<br/>**Swift Bindable**
+<br/>**Swift UI PanGesture Recognizer**
+<br/>**Resolving Retain Cycles**
+<br/>**Swift keyframe animation**
+<br/>**Swift Reactive Programing**
 <br/>**ProgramaticUI**
-<br/>**Pagination**
-<br/>**Swift DispatchGroup**
-<br/>**Compositional Layout**
-<br/>**Generic Networking**
-<br/>**Nested UICollectionViews**
+<br/>**Swift AutoLayout**
+<br/>**Pagination Data Fetch**
 <br/>**Dependency Injection**
-<br/>**Auto Layout Constraint Animations**
 
 This project is a replica of Apple's App Store, developed as a mobile application store clone. Throughout this process, I enhanced my iOS development skills by utilizing advanced features of the Swift programming language.
 
