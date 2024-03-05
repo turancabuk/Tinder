@@ -32,7 +32,7 @@ Bu proje kapsamında aşağıdaki Swift özelliklerini kullanarak geliştirme ya
 <br/>**Dependency Injection**
 
 
-![tinderrr](https://github.com/turancabuk/Tinder/assets/98350672/5efbf563-9f28-46ca-8b63-b621e79a016f){:width="100px" height="100px"}
+![tinderrr](https://github.com/turancabuk/Tinder/assets/98350672/5efbf563-9f28-46ca-8b63-b621e79a016f){:width="30px" height="30px"}
 
 
 
